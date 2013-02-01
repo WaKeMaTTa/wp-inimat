@@ -19,4 +19,8 @@ To install the plugin follow these simple steps:
 * Activate the plugin through the Plugins menu in WordPress
 * Start using the shortcodes as described above
 
+## Configuration
+
+Currently does not have any panel to manage-what.
+
 ## Changelog
