@@ -1,12 +1,12 @@
 <?php
 /*
-Plugin Name: Inimat
-Plugin URI: http://URI_De_La_Página_Que_Describe_el_Plugin_y_Actualizaciones
-Description: Inimat (plugin en construcion) Sirver para clasificar inimats, ...
+Plugin Name: WP Inimat
+Plugin URI: https://github.com/WaKeMaTTa/WP-Inimat
+Description: WP Inimat
 Version: 0.0.3.7
-Author: Mohamed Ziata (WaKeMaTTa)
+Author: WaKeMaTTa (Mohamed Ziata)
 Email: m.ziata@hotmail.com
-Author URI: http://URI_del_Autor_del_Plugin
+Author URI: https://github.com/WaKeMaTTa/
 License: GPLv3
 */
 
