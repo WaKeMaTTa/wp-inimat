@@ -5,7 +5,7 @@ It is a plugin for WordPress called wp-inimat, created for the project Inimat. C
 
 Functions provided by the plugin:
 
-* Add creatures `[in progress]*`
+* Add creatures `[in progress]`
 * Modify creatures (option only for adminsitradores) `[coming soon]`
 * View all creatures `[coming soon]`
 * Viewing a single creature with carecteristicas `[coming soon]`
