@@ -21,6 +21,6 @@ To install the plugin follow these simple steps:
 
 ## Configuration
 
-Currently does not have any panel to manage-what.
+Currently does not have any panel to manage.
 
 ## Changelog
