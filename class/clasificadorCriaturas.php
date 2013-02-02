@@ -125,7 +125,7 @@ class clasificadorCriaturas {
 	*
 	* @return mixed
 	*/
-	function form_criaturas($action, $reset, $rol_admin, $nombre='', $altura='', $ancho='', $peso='', $tipo='', $genero='', $habitat='', $habilidad1='', $habilidad2='', $habilidad3='', $habilidad4='', $habilidad5='', $descripcion='', $licencia='') {
+	function form_criaturas($action, $reset, $rol_admin, $nombre='', $altura='', $ancho='', $peso='', $tipo='', $genero='', $habitat='', $habilidad1='', $habilidad2='', $habilidad3='', $habilidad4='', $habilidad5='', $descripcion='', $licencia='',$imgBoceto=NULL, $imgModelado=NULL, $imgTexturizado=NULL, $zip=NULL, $path=NULL) {
 		global $current_user;
 		
 		// variables de estilo rapido
@@ -247,7 +247,7 @@ class clasificadorCriaturas {
 
 		}
 		
-		if ($reset == FALSE && isset($error_global) == FALSE) {echo 'Bien! aGregada';}
+		if ($reset == FALSE && isset($error_global) == FALSE) {echo '<span>Bien la criatura a sido agregada</span>';}
 
 		?>
 		<form action="admin.php?page=<?php echo $action; ?>" method="post" name="formulario" target="_self" enctype="multipart/form-data">
@@ -382,6 +382,10 @@ class clasificadorCriaturas {
 		</table>
 	</form>
 	<?php
+	}
+	
+	function saveFileCraitura($path, $type, $size, $nombre_criatura) {
+		//
 	}
 	
 }

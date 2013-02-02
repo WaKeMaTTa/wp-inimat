@@ -29,11 +29,11 @@ if(! class_exists( "inimat" ) ){
 			static $slug_stylesheet = "wp-inimat-style";
 			
 		// variables estaticas de permiso
-			static $only_admins = "manage_options";
-			static $all = "read";
+			static $only_admins = 'manage_options';
+			static $all = 'read';
 		
 		// database
-			static $db_criaturas = "inimat_criaturas";
+			static $db_criaturas = 'inimat_criaturas';
 	
 		// Menu Prinpial
 			static $slug_principal = "inimat";
@@ -96,6 +96,12 @@ if(! class_exists( "inimat" ) ){
 			$icon = '<div id="icon-themes" class="icon32" style="background-image:url('.plugin_dir_url(__FILE__).'/img/icon32.png); background-position: 0 0;"><br /></div>';
 			return $icon;
 		}
+		
+		function getPathFileSave() {
+			$path_save_files = plugin_dir_url(__FILE__).'/criaturas/';
+			return $path_save_files;
+		}
+		
 		
 		/*
 		* function nav
@@ -240,7 +246,7 @@ if(! class_exists( "inimat" ) ){
 					}
 				
 				// form
-				$anadirCriatura -> form_criaturas(self::$slug_anadir_criatura, FALSE, $rol_admin, $nombre, $altura, $ancho, $peso, $tipo, $genero, $habitat, $habilidad1, $habilidad2, $habilidad3, $habilidad4, $habilidad5, $descripcion, $comentario, $licencia, $imgBoceto, $imgModelado, $imgTexturizado, $zip);
+				$anadirCriatura -> form_criaturas(self::$slug_anadir_criatura, FALSE, $rol_admin, $nombre, $altura, $ancho, $peso, $tipo, $genero, $habitat, $habilidad1, $habilidad2, $habilidad3, $habilidad4, $habilidad5, $descripcion, $comentario, $licencia, $imgBoceto, $imgModelado, $imgTexturizado, $zip, getPathFileSave());
 				
 			}
 			echo '</div>';
