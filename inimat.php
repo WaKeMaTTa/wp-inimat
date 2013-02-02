@@ -15,45 +15,44 @@ global $inimat;
 if(! class_exists( "inimat" ) ){
 	
 	class inimat {
-		static $option_name = "inimat_options";
-		static $database_prefix = "inimat_functions";
-		static $post_prefix = "z29fno22lk32";
-		public $_shared = "";
-		static $database_version = "1";
+			static $option_name = "inimat_options";
+			static $database_prefix = "inimat_functions";
+			static $post_prefix = "z29fno22lk32";			// borrar
+			public $_shared = "";
+			static $database_version = "1";
+			
+		// nombre del plguin
+			static $name_plugin = 'wp-inimat';
+		
+		// variable estatica para indicar el nombre del archivo css
+			static $stylesheet = 'css/style.css';
+			static $slug_stylesheet = "wp-inimat-style";
+			
+		// variables estaticas de permiso
+			static $only_admins = "manage_options";
+			static $all = "read";
+		
+		// database
+			static $db_criaturas = "inimat_criaturas";
 	
-	// variable estatica para indicar el nombre del archivo css
-		static $css = '';
-	
-	// variable estatica para indicar el nombre del archivo css
-		static $slug_stylesheet = "inimat-style";
-		static $name_stylesheet = "style.css";
-		
-	// variables estaticas de permiso
-		static $only_admins = "manage_options";
-		static $all = "read";
-	
-	// database
-		static $db_criaturas = "inimat_criaturas";
-
-	// Menu Prinpial
-		static $slug_principal = "inimat";
-		static $menu_principal = "Inimat"; 
-		static $page_principal = "Inimat";
-		static $icon = '<div id="icon-themes" class="icon32" style="background-image:url(../wp-content/plugins/inimat/img/icon32.png); background-position: 0 0;"><br /></div>';
-		
-	// SubMenus
-		static $slug_anadir_criatura 	= "inimat-anadir-criatura";
-		static $title_anadir_criatura 	= "Añadir una criatura";
-		
-		static $slug_modificar_criatura 	= "inimat-modificar-criatura";
-		static $title_modificar_criatura 	= "Modificar una criatura";
-		
-		static $slug_ver_criatura 		= "inimat-ver-criaturas";
-		static $title_ver_criatura 		= "Ver las criaturas";
-		
-		static $submenu_20_slug = "inimat-menu";
-		static $submenu_20_title = "Información del Plugin"; 
-		static $submenu_20_page_title = "Información del Plugin";
+		// Menu Prinpial
+			static $slug_principal = "inimat";
+			static $menu_principal = "Inimat"; 
+			static $page_principal = "Inimat";
+			
+		// SubMenus
+			static $slug_anadir_criatura 	= "inimat-anadir-criatura";
+			static $title_anadir_criatura 	= "Añadir una criatura";
+			
+			static $slug_modificar_criatura 	= "inimat-modificar-criatura";
+			static $title_modificar_criatura 	= "Modificar una criatura";
+			
+			static $slug_ver_criatura 		= "inimat-ver-criaturas";
+			static $title_ver_criatura 		= "Ver las criaturas";
+			
+			static $submenu_20_slug = "inimat-menu";
+			static $submenu_20_title = "Información del Plugin"; 
+			static $submenu_20_page_title = "Información del Plugin";
 
 		function __construct(){
 			// Hook : 
@@ -72,34 +71,32 @@ if(! class_exists( "inimat" ) ){
 		
 		// menu_register() - funcion de wordpress, se encuentra a wp-admin/includes/plugin.php
 		function registrar_menu(){
-		// menu
-			$page = add_menu_page( self::$page_principal, self::$menu_principal, self::$all, self::$slug_principal, array(__CLASS__, "page_principal"), plugins_url("img/icon.png", __FILE__), 3 );
-		// submenus
-			$parent_slug = self::$slug_principal;
-			$page_anadir_criatura = add_submenu_page( $parent_slug, self::$title_anadir_criatura, self::$title_anadir_criatura, self::$all, self::$slug_anadir_criatura, array(__CLASS__, "page_anadir_criatura"));
+			// menu
+				$page = add_menu_page( self::$page_principal, self::$menu_principal, self::$all, self::$slug_principal, array(__CLASS__, "page_principal"), plugins_url("img/icon.png", __FILE__), 3 );
+			// submenus
+				$parent_slug = self::$slug_principal;
+				$page_anadir_criatura = add_submenu_page(	$parent_slug, self::$title_anadir_criatura, self::$title_anadir_criatura, self::$all, self::$slug_anadir_criatura, array(__CLASS__, "page_anadir_criatura"));
+				
+				$page_modificar_criatura = add_submenu_page( $parent_slug, self::$title_modificar_criatura, self::$title_modificar_criatura, self::$all, self::$slug_modificar_criatura, array(__CLASS__, "page_modificar_criatura"));
+				
+				$page_ver_criatura = add_submenu_page( $parent_slug, self::$title_ver_criatura, self::$title_ver_criatura, self::$all, self::$slug_ver_criatura, array(__CLASS__, "page_ver_criatura"));
 			
-			$page_modificar_criatura = add_submenu_page( $parent_slug, self::$title_modificar_criatura, self::$title_modificar_criatura, self::$all, self::$slug_modificar_criatura, array(__CLASS__, "page_modificar_criatura"));
-			
-			$page_ver_criatura = add_submenu_page( $parent_slug, self::$title_ver_criatura, self::$title_ver_criatura, self::$all, self::$slug_ver_criatura, array(__CLASS__, "page_ver_criatura"));
-			
-		// estilo css para las paginas indicadas
-			add_action( 'admin_print_styles-' . $page_anadir_criatura, array( __CLASS__, "estilo_css" ) );
-			add_action( 'admin_print_styles-' . $page, array( __CLASS__, "style" ) );
+			// estilo css para las paginas indicadas
+				add_action( 'admin_print_styles-' . $page, array( __CLASS__, "estilo_css" ) );
+				add_action( 'admin_print_styles-' . $page_anadir_criatura, array( __CLASS__, "estilo_css" ) );
 			
 			$page20 = add_submenu_page( $parent_slug, self::$submenu_20_title, self::$submenu_20_page_title, self::$all, self::$submenu_20_slug, array(__CLASS__, "menu_sub"));
-
-/*ESTILO:	add_action( 'admin_print_styles-' . $page, array( __CLASS__, "menu_styles" ) );
-			add_action( 'admin_print_styles-' . $page_anadir_criatura, array( __CLASS__, "menu_styles" ) );
-			add_action( 'admin_print_styles-' . $page3, array( __CLASS__, "menu_styles" ) );*/
-		}
-		
-		function style(){
-			wp_enqueue_style( self::$slug_stylesheet, plugins_url(__CLASS__).'/'.self::$name_stylesheet );
 		}
 		
 		function estilo_css(){
-			wp_enqueue_style( self::$slug_stylesheet, plugins_url(__CLASS__).'/css/style.css'.self::$css );
+			wp_enqueue_style( self::$slug_stylesheet, plugin_dir_url(__FILE__).self::$stylesheet );
 		}
+		
+		function getIcon() {
+			$icon = '<div id="icon-themes" class="icon32" style="background-image:url('.plugin_dir_url(__FILE__).'/img/icon32.png); background-position: 0 0;"><br /></div>';
+			return $icon;
+		}
+		
 		/*
 		* function nav
 		*
@@ -115,11 +112,21 @@ if(! class_exists( "inimat" ) ){
 		* @return mixed
 		*/
 		function nav($title, $submenu = array(array('SIN-SLUG','SIN NOMBRE', 0)), $description = '', $look = 0) {
+			
+			// rutas
+				echo plugins_url(__CLASS__).'<br>';
+				echo plugin_dir_url(__CLASS__).'<br>';
+				echo plugin_dir_path(__CLASS__).'<br>';
+				echo plugin_basename(__CLASS__).'<br>';
+				echo '<br />';
+				echo plugins_url(__FILE__).'<br>';
+				echo plugin_dir_url(__FILE__).'<br>';
+				echo plugin_dir_path(__FILE__).'<br>';
+				echo plugin_basename(__FILE__).'<br>';
+
+			
 			$n = count($submenu);
-			/*echo plugins_url(__CLASS__).'<br>';
-			echo plugin_dir_url(__CLASS__).'<br>';
-			echo plugin_dir_path(__CLASS__).'<br>';
-			echo plugin_basename(__CLASS__).'<br>';*/
+			
 			if ($look == 0) {
 				echo '<div id="welcome-panel" class="welcome-panel">';
 				echo '<div class="welcome-panel-content">';
@@ -136,24 +143,28 @@ if(! class_exists( "inimat" ) ){
 		}
         
 		function page_principal(){
+			
 			echo '<div class="wrap">';
-			echo self::$icon.'<h2>'.self::$page_principal.'</h2>';
+			
+			echo self::getIcon().'<h1>'.self::$page_principal.'</h1>';
 		
-		// nav de Clasificador de Criaturas
-			$title_criaturas = "Clasificador de Criaturas";
-			$description_criaturas = "Herramientas para administrar las criaturas";
-			$submenu_criaturas = array(	array( self::$slug_anadir_criatura, self::$title_anadir_criatura, 0 ),
-										array( self::$slug_modificar_criatura, self::$title_modificar_criatura, 1),
-										array( self::$slug_ver_criatura, self::$title_ver_criatura, 0) );
-			self::nav($title_criaturas, $submenu_criaturas, $description_criaturas);
+			// nav de Clasificador de Criaturas
+				$title_criaturas = "Clasificador de Criaturas";
+				$description_criaturas = "Herramientas para administrar las criaturas";
+				$submenu_criaturas = array(	array( self::$slug_anadir_criatura, self::$title_anadir_criatura, 0 ),
+											array( self::$slug_modificar_criatura, self::$title_modificar_criatura, 1),
+											array( self::$slug_ver_criatura, self::$title_ver_criatura, 0) );
+				self::nav($title_criaturas, $submenu_criaturas, $description_criaturas);
 			
 			echo '</div>';
+			
 		}
 
         function page_anadir_criatura() {
+			
 			echo '<div class="wrap">';
 			
-			echo self::$icon.'<h2>'.self::$page_principal.' - Clasificador de Criaturas</h2>';
+			echo self::getIcon().'<h1>'.self::$page_principal.'</h1> <h2>Clasificador de Criaturas</h2>';
 			
 			echo '<h3>'.self::$title_anadir_criatura.'</h3>';
 			
@@ -170,29 +181,66 @@ if(! class_exists( "inimat" ) ){
 				$anadirCriatura = new clasificadorCriaturas('anadir', get_current_user_id(), $rol_admin, self::$slug_anadir_criatura, FALSE);
 				
 				// recogida de las variables + limpiarlas de codigo malicioso
-				if( isset($_POST["nombre"]) ) { 		$nombre 		= esc_html( sanitize_user( wp_trim_words($_POST["nombre"], 1), true ) ); }
-				if( isset($_POST["altura"]) ) { 		$altura 		= number_format( (double) $_POST["altura"], 2 ); }
-				if( isset($_POST["ancho"]) ) { 			$ancho 			= number_format( (double) $_POST["ancho"], 2 ); }
-				if( isset($_POST["peso"]) ) { 			$peso 			= number_format( (double) $_POST["peso"], 2 ); }
-				if( isset($_POST["tipo"]) ) { 			$tipo 			= esc_html( $_POST["tipo"] ); }
-				if( isset($_POST["genero"]) ) { 		$genero 		= esc_html( $_POST["genero"] ); }
-				if( isset($_POST["habitat"]) ) { 		$habitat 		= sanitize_text_field( $_POST["habitat"] ); }
-				if( isset($_POST["descripcion"]) ) { 	$descripcion 	= esc_textarea( $_POST["descripcion"] ); }
-				if( isset($_POST["comentario"]) ) { 	$comentario 	= esc_textarea( $_POST["comentario"] ); }
-				if( isset($_POST["habilidad1"]) ) { 	$habilidad1 	= esc_html( $_POST["habilidad1"] ); }
-				if( isset($_POST["habilidad2"]) ) { 	$habilidad2 	= esc_html( $_POST["habilidad2"] ); }
-				if( isset($_POST["habilidad3"]) ) { 	$habilidad3 	= esc_html( $_POST["habilidad3"] ); }
-				if( isset($_POST["habilidad4"]) ) { 	$habilidad4 	= esc_html( $_POST["habilidad4"] ); }
-				if( isset($_POST["habilidad5"]) ) { 	$habilidad5 	= esc_html( $_POST["habilidad5"] ); }
-				//if( isset($_FILES["imgBoceto"]) ) { 	$imgBoceto 		= sanitize_file_name( remove_accents($_POST["imgBoceto" ]) ); }
-				//if( isset($_FILES["imgModelado"]) ) { 	$imgModelado 	= sanitize_file_name( remove_accents($_POST["imgModelado"] ) ); }
-				//if( isset($_FILES["imgTexturizado"]) ) { $imgTexturizado = sanitize_file_name( remove_accents($_POST["imgTexturizado"] ) ); }
-				//if( isset($_FILES["zip"]) ) { 			$zip 			= sanitize_file_name( remove_accents($_POST["zip"] ) ); }
-				@$licencia	= trim($_POST["licencia"]);
-				if( isset($_POST["filalizado"]) ) { 	$filalizado 	= esc_html( $_POST["filalizado"] );	 }
+					@$nombre 		= esc_html( sanitize_user( wp_trim_words($_POST["nombre"], 1), true ) );
+					@$altura 		= number_format( (double) $_POST["altura"], 2 );
+					@$ancho 		= number_format( (double) $_POST["ancho"], 2 );
+					@$peso 			= number_format( (double) $_POST["peso"], 2 );
+					@$tipo 			= esc_html( $_POST["tipo"] );
+					@$genero 		= esc_html( $_POST["genero"] );
+					@$habitat 		= sanitize_text_field( $_POST["habitat"] );
+					@$descripcion 	= esc_textarea( $_POST["descripcion"] );
+					@$comentario 	= esc_textarea( $_POST["comentario"] );
+					@$habilidad1 	= esc_html( $_POST["habilidad1"] );
+					@$habilidad2 	= esc_html( $_POST["habilidad2"] );
+					@$habilidad3 	= esc_html( $_POST["habilidad3"] );
+					@$habilidad4 	= esc_html( $_POST["habilidad4"] );
+					@$habilidad5 	= esc_html( $_POST["habilidad5"] );
+					
+					// licencia
+					if (@$licencia === 'acepto_licencia') {
+						$licencia = TRUE;
+					} else {
+						$licencia = FALSE;
+					}
+					
+					// imgBoceto
+					if ($_FILES['imgBoceto'] != NULL) {
+						$imgBocetoTemp = $_FILES['imgBoceto']['tmp_name'];	// Path temporal
+						$imgBocetoSize = $_FILES['imgBoceto']['size'];		// (en Bytes)
+						$imgBocetoType = $_FILES['imgBoceto']['type'];		// Tipo
+						$imgBocetoName = $_FILES['imgBoceto']['name'];		// Nombre original del archivo + extencion
+						$imgBoceto = array ($imgBocetoTemp, $imgBocetoSize, $imgBocetoType, $imgBocetoName);
+					}
+						
+					// imgModelado
+					if ($_FILES['imgModelado'] != NULL) {
+						$imgModeladoTemp = $_FILES['imgBoceto']['tmp_name'];
+						$imgModeladoSize = $_FILES['imgBoceto']['size'];
+						$imgModeladoType = $_FILES['imgBoceto']['type'];
+						$imgModeladoName = $_FILES['imgBoceto']['name'];
+						$imgModelado = array ($imgModeladoTemp, $imgModeladoSize, $imgModeladoType, $imgModeladoName);
+					}
+					
+					// imgTexturizado
+					if ($_FILES['imgTexturizado'] != NULL) {
+						$imgTexturizadoTemp = $_FILES['imgBoceto']['tmp_name'];
+						$imgTexturizadoSize = $_FILES['imgBoceto']['size'];
+						$imgTexturizadoType = $_FILES['imgBoceto']['type'];
+						$imgTexturizadoName = $_FILES['imgBoceto']['name'];
+						$imgTexturizado = array ($imgTexturizadoTemp, $imgTexturizadoSize, $imgTexturizadoType, $imgTexturizadoName);
+					}
+					
+					// zip
+					if ($_FILES['zip'] != NULL) {
+						$zipTemp = $_FILES['imgBoceto']['tmp_name'];
+						$zipSize = $_FILES['imgBoceto']['size'];
+						$zipType = $_FILES['imgBoceto']['type'];
+						$zipName = $_FILES['imgBoceto']['name'];
+						$zip = array ($zipTemp, $zipSize, $zipType, $zipName);
+					}
 				
 				// form
-				$anadirCriatura -> form_criaturas(self::$slug_anadir_criatura, FALSE, $rol_admin, $nombre, $altura, $ancho, $peso, $tipo, $genero, $habitat, $habilidad1, $habilidad2, $habilidad3, $habilidad4, $habilidad5, $descripcion, $licencia);
+				$anadirCriatura -> form_criaturas(self::$slug_anadir_criatura, FALSE, $rol_admin, $nombre, $altura, $ancho, $peso, $tipo, $genero, $habitat, $habilidad1, $habilidad2, $habilidad3, $habilidad4, $habilidad5, $descripcion, $comentario, $licencia, $imgBoceto, $imgModelado, $imgTexturizado, $zip);
 				
 			}
 			echo '</div>';

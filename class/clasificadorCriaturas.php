@@ -1,24 +1,9 @@
 <?php
 /**
- * clasificadorCriaturas:
+ * Clasificador de Criaturas:
  * @description	Anadir, modificar y ver las criaturas.
  * @author		Mohamed Ziata (WaKeMaTTa)
  * @version		1.0 
- * 
- * @method Thumbnails   saveAsPng           ( $imagePath)   Save thumbnail as png into path	---
- * @method Thumbnails   saveAsJpeg          ( $imagePath)   Save thumbnail as png into path	---
- * @method Thumbnails   saveAsJpg           ( $imagePath)   Save thumbnail as png into path	---
- * @method Thumbnails   saveAsGif           ( $imagePath)   Save thumbnail as png into path	---
- * @method Thumbnails   saveAsGd            ( $imagePath)   Save thumbnail as png into path	---
- * @method Thumbnails   saveAsGd2           ( $imagePath)   Save thumbnail as png into path	---
- * @method Thumbnails   saveAsXbm           ( $imagePath)   Save thumbnail as png into path	---
- * @method null         printThumbnailAsPng ()              Print thumbnail as png			---
- * @method null         printThumbnailAsJpeg()              Print thumbnail as jpg			---
- * @method null         printThumbnailAsJpg ()              Print thumbnail as jpeg			---
- * @method null         printThumbnailAsGif ()              Print thumbnail as gif			---
- * @method null         printThumbnailAsGd  ()              Print thumbnail as gd			---
- * @method null         printThumbnailAsGd2 ()              Print thumbnail as gd2			---
- * @method null         printThumbnailAsXbm ()              Print thumbnail as xbm			---
  */
 class clasificadorCriaturas {
 	
@@ -62,15 +47,18 @@ class clasificadorCriaturas {
 											$tipo='', $genero='', 
 											$habitat='', 
 											$habilidad1='', $habilidad2='', $habilidad3='', $habilidad4='', $habilidad5='', 
-											$descripcion='',
-											$licencia='');
+											$descripcion='', $comentario='',
+											$licencia='',
+											$imgBoceto=NULL, $imgModelado=NULL, $imgTexturizado=NULL, $zip=NULL);
 				}
 			}
 		}
+		
 		// opcion modificar
 		if ($funcModificar == TRUE) {
 			echo 'modificar';
 		}
+		
 		// opcion ver
 		if ($funcVer == TRUE) {
 			echo 'ver';
@@ -256,24 +244,10 @@ class clasificadorCriaturas {
 				$error_global = TRUE;
 				$error_descripcion = 1;
 			}
-			
-			// verificar si se a aceptado la licencia
-			
-			if ( isset($licencia) == TRUE) {
-				if ( $licencia == "acepto_licencia" ) {
-					$aceptala_licencia = 1;
-					echo $licencia;
-				} else {
-					$error_global = TRUE;
-					$error_licencia = 1;
-					$mensaje_error_licencia = 'Si no aceptas nuestras condiciones, nosotros no podemos aceptar tu criatura. :\'(';
-				}
-			}
+
 		}
 		
-		if ( isset($finalizado) == FALSE) {
-			$finalizado = FALSE;
-		}
+		if ($reset == FALSE && isset($error_global) == FALSE) {echo 'Bien! aGregada';}
 
 		?>
 		<form action="admin.php?page=<?php echo $action; ?>" method="post" name="formulario" target="_self" enctype="multipart/form-data">
@@ -385,22 +359,22 @@ class clasificadorCriaturas {
 		</tr>
 		<tr>
 			<td><label>Licencia</label></td>
-			<td><input name="licencia" type="checkbox" value="acepto_licencia" <?php if ($reset == FALSE) { if (isset($error_licencia)) {} else { echo 'checked="checked"'; } } ?> /> 
-			<span <?php if (isset($error_licencia)) { echo ' style="color:red;"'; } ?> >
-			¿Aceptas que la criatura quedara bajo la licencia <a href="http://creativecommons.org/licenses/by-sa/3.0/es/" target="_blank">CC by-sa 3.0</a>?</span>
+			<td><?php 
+			if ($reset == TRUE) {
+				echo '<input name="licencia" type="checkbox" value="acepto_licencia">';
+				echo '<span>¿Aceptas que la criatura quedara bajo la licencia <a href="http://creativecommons.org/licenses/by-sa/3.0/es/" target="_blank">CC by-sa 3.0</a>?</span>';
+			} else {
+				if ($licencia == FALSE) {
+					$error_global = TRUE;
+					echo '<input name="licencia" type="checkbox" value="acepto_licencia">';
+					echo '<span style="color:red;">¿Aceptas que la criatura quedara bajo la licencia <a href="http://creativecommons.org/licenses/by-sa/3.0/es/" target="_blank">CC by-sa 3.0</a></span>';
+				} else {
+					echo '<input name="licencia" type="checkbox" value="acepto_licencia" checked="checked">';
+					echo '<span style="color:green;">Gracias por aceptar la licencia.</span>';
+				}
+			}
+			?></td> 			
 		</tr>
-		<?php
-		if ( $rol_admin == TRUE ) {
-			?>
-			<tr>
-				<td><label title="SI -> signigica que si esta acabada la criatura                  NO -> Significa que no esta terminada">¿Finalizado?</label></td>
-				<td><input name="finalizado" type="radio" value="0" <?php if ($finalizado == FALSE) { echo ' checked="checked" '; }?> >&nbsp;No&nbsp;(significa que no esta terminada)
-				<br />
-				<input name="finalizado" type="radio" value="1" <?php if ($finalizado == TRUE) { echo ' checked="checked" '; }?> />&nbsp;Si&nbsp;(significa que si esta terminada)</td> 
-			</tr>
-			<?php
-		}
-		?>
 		<tr>
 			<td colspan="2" align="center"><input class="button button-primary" name="enviar" type="submit" value="¡enviar!" style="margin:15px;"/></td>
 			
