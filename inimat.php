@@ -42,12 +42,15 @@ if ( !function_exists( 'add_action' ) ) {
 
 // Function to activate the plugin
 function wpinimat() {
+	// Globals
+	global $wpdb;
+	
     // Loading textdomain
 	load_plugin_textdomain( 'wpinimat_languages', false, dirname(plugin_basename( __FILE__ )).'/languages' );
-	
+
 	// Create table PREFIX_inimat_creatures to database		
 	$query = $wpdb -> query(
-		"CREATE TABLE IF NOT EXISTS ".$wpdb->prefix."_inimat_creatures (
+		"CREATE TABLE IF NOT EXISTS ".$wpdb->prefix."inimat_creatures (
 			id int(11) NOT NULL AUTO_INCREMENT,
 			date_add datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 			date_edit datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -70,13 +73,8 @@ function wpinimat() {
 			finished tinyint(1) NOT NULL,
 			PRIMARY KEY (id),
 			UNIQUE KEY name (name)
-		) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ; )"
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;"
 	);
-	
-	// Verify if table is created
-	if($query === FALSE) {
-		echo 'ERROR: Failed to Create table '.$wpdb->prefix.'_inimat_creatures to database';
-	}
 }
 
 // Activate the plugin
