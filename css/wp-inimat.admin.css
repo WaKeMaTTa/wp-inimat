@@ -1,0 +1,77 @@
+@charset "utf-8";
+
+.wrap h2 {
+	color: #09F ;
+}
+
+/* thanks add creature */
+.thanks_add_creature {
+	background-color: transparent;
+	background-image: url('../img/thanks_add_creature.png');
+	padding-left: 110px;
+	background-repeat: no-repeat;
+	height: 100px;
+}
+
+.thanks_add_creature p {
+	border: 3px #009900 solid;
+	padding: 15px;
+}
+
+/* CSS Document 
+
+h1 {
+	font-size: 23px;
+	padding: 9px 15px 4px 0;
+	line-height: 29px;
+	font-weight: normal;
+}
+
+h2 {
+	border-bottom: 1px solid rgb(150, 150, 150);
+	font-size: 18px !important;
+	padding: 0px !important;
+}
+
+input.error {
+	border: none;
+	background-color: transparent;
+	color: red;
+	width: 260px;
+}
+
+.alert {
+	padding: 8px 35px 8px 14px;
+	margin-bottom: 18px;
+	text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+	background-color: #fcf8e3;
+	border: 1px solid #fbeed5;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	color: #c09853;
+	display: block;
+}
+.alert .close {
+	position: relative;
+	top: -2px;
+	right: -21px;
+	line-height: 18px;
+}
+.alert-success {
+	background-color: #dff0d8;
+	border-color: #d6e9c6;
+	color: #468847;
+}
+.alert-danger,
+.alert-error {
+	background-color: #f2dede;
+	border-color: #eed3d7;
+	color: #b94a48;
+}
+.alert-info {
+	background-color: #d9edf7;
+	border-color: #bce8f1;
+	color: #3a87ad;
+}
+*/
