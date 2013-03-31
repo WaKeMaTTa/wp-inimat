@@ -42,8 +42,7 @@ Currently does not have any panel to manage.
 
 ### Screenshots
 
-	![screenshot-1](screenshot-1.jpg)
-	*View all creatures*
+![screenshot-1](screenshot-1.jpg)
 
 ### Changelog
 
