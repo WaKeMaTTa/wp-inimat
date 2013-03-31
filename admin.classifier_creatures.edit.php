@@ -276,7 +276,7 @@ if (isset($_GET["select_creature"]) == FALSE) {
 			
 			$array_skills = unserialize($query[0]["sketch"]);
 			
-			define('NAME_SKETCH', $array_skills["name"]);
+			define('NAME_SKETCH', $array_skills["file_name"]);
 			
 		}
 	
@@ -321,6 +321,14 @@ if (isset($_GET["select_creature"]) == FALSE) {
 		$form->add('note', 'note_imgModeled', 'imgModeled', __('File must have the .jpg, .jpeg, png or .gif extension, and no more than 1 MB!', 'wpinimat_languages'));
 		
 	## Imagen Textured
+	
+		if ($query[0]["textured"] != '') {
+			
+			$array_modeled = unserialize($query[0]["textured"]);
+			
+			define('NAME_TEXTURED', $array_modeled["file_name"]);
+			
+		}
 	
 		$form->add('label', 'label_imgTextured', 'imgTextured', __('Imagen Textured:', 'wpinimat_languages'));
 		

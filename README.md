@@ -17,7 +17,7 @@ Functions provided by the plugin:
 
 * Add creatures `[completed]`
 * Modify creatures (option only for adminsitradores) `[completed]`
-* View all creatures `[coming soon]`
+* View all creatures `[completed]`
 * Viewing a single creature with carecteristicas `[coming soon]`
 
 ## Installation
@@ -42,7 +42,8 @@ Currently does not have any panel to manage.
 
 ### Screenshots
 
-    coming soon
+	![screenshot-1](screenshot-1.jpg)
+	*View all creatures*
 
 ### Changelog
 

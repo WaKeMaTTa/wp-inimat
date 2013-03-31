@@ -5,13 +5,9 @@ if ( !function_exists( 'add_action' ) ) {
 	exit;
 }
 
-
 // Includes
-require( WPINIMAT_PLUGIN_PATH . 'class/zebra_form/Zebra_Form.php' );
+require( WPINIMAT_PLUGIN_PATH . 'class/Zebra_Pagination.php' );
 require( WPINIMAT_PLUGIN_PATH . 'class/Zebra_Image.php' );
-require( WPINIMAT_PLUGIN_PATH . 'class/Inimat_Functions.php' );
-
-$functions = new Inimat_Functions();
 
 // var globlas
 global $wpdb, $current_user;
@@ -339,7 +335,7 @@ if($form->validate()) {
 			
 			$image->target_path = WPINIMAT_PLUGIN_PATH . 'upload/th/' . $form->file_upload["imgSketch"]["file_name"];
 			
-			$image->resize(100, 100, ZEBRA_IMAGE_BOXED, -1);
+			$image->resize(100, 100, ZEBRA_IMAGE_NOT_BOXED, -1);
 			
 			$sql_imgSketch = serialize($form->file_upload["imgSketch"]);
 			
@@ -356,7 +352,7 @@ if($form->validate()) {
 			
 			$image->target_path = WPINIMAT_PLUGIN_PATH . 'upload/th/' . $form->file_upload["imgModeled"]["file_name"];
 			
-			$image->resize(100, 100, ZEBRA_IMAGE_BOXED, -1);
+			$image->resize(100, 100, ZEBRA_IMAGE_NOT_BOXED, -1);
 			
 			$sql_imgModeled = serialize($form->file_upload["imgModeled"]);
 			
@@ -373,7 +369,7 @@ if($form->validate()) {
 			
 			$image->target_path = WPINIMAT_PLUGIN_PATH . 'upload/th/' . $form->file_upload["imgTextured"]["file_name"];
 			
-			$image->resize(100, 100, ZEBRA_IMAGE_BOXED, -1);
+			$image->resize(100, 100, ZEBRA_IMAGE_NOT_BOXED, -1);
 			
 			$sql_imgTextured = serialize($form->file_upload["imgTextured"]);
 			
@@ -457,18 +453,22 @@ if($form->validate()) {
 		// Verify if values is upload to database
 		if($query === FALSE) {
 			
-			$form->add_error('error', __('Failed to upload the values to the database', 'wpinimat_languages'));
+			 $form->add_error('error', __('Failed to upload the values to the database', 'wpinimat_languages'));
 			
 		} else {
 			
-			$functions->msg(__('Thanks for add creature!', 'wpinimat_languages'), 'correct');
+			echo '<div class="thanks_add_creature"><p>';
+			
+			_e('Thanks for add creature!', 'wpinimat_languages');
+			
+			echo '</p></div>';
 			
 		}
 		
 		// debug mode
 		if (WP_DEBUG == TRUE) {
 			
-			echo '<h3>Debug Mode:</h3>';
+			echo '<h1>Debug Mode:</h1>';
 			
 			print_r('<pre>');
 			

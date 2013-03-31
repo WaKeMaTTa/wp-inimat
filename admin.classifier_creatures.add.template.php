@@ -72,6 +72,12 @@ if (isset($author)) { ?>
 </div>
 
 <div class="row">
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#more_skill").generaNuevosCampos("skill_", 2);
+		});
+    </script>
+    
 	<?php
 	echo $label_skills;
 	
@@ -107,7 +113,7 @@ if (isset($author)) { ?>
 				
 				echo '</select> <br/>';
 				
-				echo '<textarea name="desc_skill'.$i.'" id="desc_skill'.$i.'" rows="5" cols="80" class="control modifier-lowercase">'.$_POST["desc_skill".$i].'</textarea>';
+				echo '<textarea name="desc_skill_'.$i.'" id="desc_skill_'.$i.'" rows="5" cols="80" class="control modifier-lowercase">'.$_POST["desc_skill_".$i].'</textarea>';
 					
 			}
 			
@@ -115,15 +121,15 @@ if (isset($author)) { ?>
 			
 		}
 		
-		echo '<input type="hidden" name="skill_total" id="skill_total" value="' . $count . '" />';
+		echo '<br /><input type="hidden" name="skill_total" id="skill_total" value="' . $count . '" />';
 		
-		//echo '<input type="button" name="more_skill" id="more_skill" value="' . __('Add Skill') . '" class="submit">';
+		echo '<input type="button" name="more_skill" id="more_skill" value="' . __('Add Skill') . '" class="button">';
 	
 	} else {
 		
 		echo $skill_1 . ' ' . $type_skill_1 . $desc_skill_1 . '<br />' 
 		. '<input type="hidden" name="skill_total" id="skill_total" value="1" />' 
-		. '<input type="button" name="more_skill" id="more_skill" value="Add Skill" class="button">' ;
+		. '<input type="button" name="more_skill" id="more_skill" value="' . __('Add Skill') . '" class="button">' ;
 	} ?>
     
     <div class="clear"></div>

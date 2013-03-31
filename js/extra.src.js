@@ -1,4 +1,5 @@
-jQuery.fn.generaNuevosCampos = function(nombreCampo, indice){
+jQuery.fn.generaNuevosCampos = function(nombreCampo, indice)
+{
 	$(this).each(function(){
 		elem = $(this);
 		elem.data("nombreCampo",nombreCampo);
@@ -24,8 +25,9 @@ jQuery.fn.generaNuevosCampos = function(nombreCampo, indice){
 	});
 	
 	return this;
-	}
+}
 	
-$(document).ready(function(){
-	$("#more_skill").generaNuevosCampos("skill_", 2);
-});
+function pagination(page)
+{
+	window.location = "admin.php?page=wpinimat/classifier_creatures&search_text="+document.form1.search_text.value+"&starting="+page;
+}

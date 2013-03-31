@@ -99,8 +99,24 @@ function wpinimat_admin_menu() {
 									'wpinimat/classifier_creatures/edit',						# menu_slug
 									'wpinimat_classifier_creatures_edit'						# function (optional)
 								);
+								
+	$page[4] = add_submenu_page(	'wpinimat',													# parent_slug
+									__( 'View ‹ Classifier of creatures', 'wpinimat_languages' ),# page_title
+									__( 'View creatures', 'wpinimat_languages' ),				# menu_title
+									'read',														# capability
+									'wpinimat/classifier_creatures/view',						# menu_slug
+									'wpinimat_classifier_creatures_view'						# function (optional)
+								);
+								
+	$page[5] = add_submenu_page(	'wpinimat',													# parent_slug
+									__( 'Search ‹ Classifier of creatures', 'wpinimat_languages' ),# page_title
+									FALSE,				# menu_title
+									'read',														# capability
+									'wpinimat/classifier_creatures/search',						# menu_slug
+									'wpinimat_classifier_creatures_search'						# function (optional)
+								);
 					
-	$page[4] = add_submenu_page(	'wpinimat',								# parent_slug
+	$page[6] = add_submenu_page(	'wpinimat',								# parent_slug
 									__( 'Settings', 'wpinimat_languages' ),	# page_title
 									__( 'Settings', 'wpinimat_languages' ),	# menu_title
 									'manage_options',						# capability
@@ -132,14 +148,14 @@ function wpinimat_admin_script() {
 	wp_register_script( 'jquery-1-9-1-js', WPINIMAT_PLUGIN_URL . 'js/jquery-1.9.1.min.js', array(), '1.9.1');
 	wp_enqueue_script( 'jquery-1-9-1-js' );
 	
-	//wp_register_script( 'jquery-1-5-2-js', WPINIMAT_PLUGIN_URL . 'js/jquery-1.5.2.min.js', array(), '1.5.2');
-	//wp_enqueue_script( 'jquery-1-5-2-js' );
-	
 	wp_register_script( 'zebra_form-js', WPINIMAT_PLUGIN_URL . 'js/zebra_form.min.js', array(), '2.9.1');
 	wp_enqueue_script( 'zebra_form-js' );
 	
-	wp_register_script( 'add-skill-js', WPINIMAT_PLUGIN_URL . 'js/add_skill.min.js', array(), '1.0');
-	wp_enqueue_script( 'add-skill-js' );
+	wp_register_script( 'zebra_pagination-js', WPINIMAT_PLUGIN_URL . 'js/zebra_pagination.min.js', array(), '1.0');
+	wp_enqueue_script( 'zebra_pagination-js' );
+	
+	wp_register_script( 'extra-js', WPINIMAT_PLUGIN_URL . 'js/extra.min.js', array(), '1.0');
+	wp_enqueue_script( 'extra-js' );
 }
 
 // Function wpbootcamp_admin_home
@@ -180,6 +196,24 @@ function wpinimat_classifier_creatures_edit() {
 	echo WPINIMAT_ICON32 . '<h2>Inimat - ' . __( 'Classifier of creatures', 'wpinimat_languages' ) . '</h2>';
 	echo '<h3>' . __('Edit creature') . '</h3>';
 	require( plugin_dir_path(__FILE__) . 'admin.classifier_creatures.edit.php');
+	echo '</div>';
+}
+
+// Function for wpinimat_classifier_creatures_edit the plugin
+function wpinimat_classifier_creatures_view() {
+	echo '<div class="wrap">';
+	echo WPINIMAT_ICON32 . '<h2>Inimat - ' . __( 'Classifier of creatures', 'wpinimat_languages' ) . '</h2>';
+	echo '<h3>' . __('View creature') . '</h3>';
+	require( plugin_dir_path(__FILE__) . 'admin.classifier_creatures.view.php');
+	echo '</div>';
+}
+
+// Function for wpinimat_classifier_creatures_edit the plugin
+function wpinimat_classifier_creatures_search() {
+	echo '<div class="wrap">';
+	echo WPINIMAT_ICON32 . '<h2>Inimat - ' . __( 'Classifier of creatures', 'wpinimat_languages' ) . '</h2>';
+	echo '<h3>' . __('Search creature') . '</h3>';
+	require( plugin_dir_path(__FILE__) . 'admin.classifier_creatures.search.php');
 	echo '</div>';
 }
 

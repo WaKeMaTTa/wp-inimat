@@ -8,6 +8,7 @@ Author: WaKeMaTTa (Mohamed Ziata)
 Email: m.ziata@hotmail.com
 Author URI: https://github.com/WaKeMaTTa/
 License: GPLv3 or later
+Textdomain: wpinimat_languages
 */
 
 /*  Copyright 2013  WaKeMaTTa  (email : m.ziata@hotmail.com)
@@ -32,7 +33,7 @@ define( 'WPINIMAT_VERSION', '0.1' );
 define( 'WPINIMAT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'WPINIMAT_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WPINIMAT_ICON32', '<div id="icon-themes" class="icon32" style="background-image:url('.WPINIMAT_PLUGIN_URL.'/img/icon32.png); background-position: 0 0;"><br /></div>' );
-define( 'WPINIMAT_CC_URL', 'admin.php?page=wpinimat/classifier_creatures' );
+define( 'WPINIMAT_CC_URL', admin_url('admin.php?page=wpinimat/classifier_creatures') );
 
 // Make sure we don't expose any info if called directly
 if ( !function_exists( 'add_action' ) ) {
@@ -50,30 +51,30 @@ function wpinimat() {
 
 	// Create table PREFIX_inimat_creatures to database		
 	$query = $wpdb -> query(
-		"CREATE TABLE IF NOT EXISTS ".$wpdb->prefix."inimat_creatures (
-			id int(11) NOT NULL AUTO_INCREMENT,
-			date_add datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-			date_edit datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-			id_author int(11) NOT NULL,
-			name_author varchar(50) NOT NULL,
-			name varchar(50) NOT NULL,
-			height float(6,2) NOT NULL,
-			width float(6,2) NOT NULL,
-			weight float(6,2) NOT NULL,
-			type varchar(50) NOT NULL,
-			gender varchar(50) NOT NULL,
-			skills text NOT NULL,
-			habitat varchar(250) NOT NULL,
-			description text NOT NULL,
-			sketch varchar(50) NOT NULL,
-			modeled varchar(50) NOT NULL,
-			textured varchar(50) NOT NULL,
-			file varchar(50) NOT NULL,
-			license tinyint(1) NOT NULL,
-			finished tinyint(1) NOT NULL,
-			PRIMARY KEY (id),
-			UNIQUE KEY name (name)
-		) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;"
+		"CREATE TABLE IF NOT EXISTS `wp_inimat_creatures` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT,
+			  `date_add` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+			  `date_edit` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+			  `id_author` int(11) NOT NULL,
+			  `name_author` varchar(50) NOT NULL,
+			  `name` varchar(50) NOT NULL,
+			  `height` float(6,2) NOT NULL,
+			  `width` float(6,2) NOT NULL,
+			  `weight` float(6,2) NOT NULL,
+			  `type` varchar(50) NOT NULL,
+			  `gender` varchar(50) NOT NULL,
+			  `skills` text NOT NULL,
+			  `habitat` text NOT NULL,
+			  `description` text NOT NULL,
+			  `sketch` text NOT NULL,
+			  `modeled` text NOT NULL,
+			  `textured` text NOT NULL,
+			  `file` text NOT NULL,
+			  `license` tinyint(1) NOT NULL,
+			  `finished` tinyint(1) NOT NULL,
+			  PRIMARY KEY (`id`),
+			  UNIQUE KEY `name` (`name`)
+			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;"
 	);
 }
 
