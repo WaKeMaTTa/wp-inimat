@@ -7,9 +7,9 @@ if ( !function_exists( 'add_action' ) ) {
 
 
 // Includes
-require( WPINIMAT_PLUGIN_PATH . 'class/zebra_form/Zebra_Form.php' );
-require( WPINIMAT_PLUGIN_PATH . 'class/Zebra_Image.php' );
-require( WPINIMAT_PLUGIN_PATH . 'class/Inimat_Functions.php' );
+require_once( WPINIMAT_PLUGIN_PATH . 'class/zebra_form/Zebra_Form.php' );
+require_once( WPINIMAT_PLUGIN_PATH . 'class/Zebra_Image.php' );
+require_once( WPINIMAT_PLUGIN_PATH . 'class/Inimat_Functions.php' );
 
 $functions = new Inimat_Functions();
 

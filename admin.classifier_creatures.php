@@ -13,14 +13,14 @@ require_once( WPINIMAT_PLUGIN_PATH . 'class/Page_Lite.php' );
 
 $functions = new Inimat_Functions();
 
-$num_rows_x_page = 2;
+$num_rows_x_page = 20;
 
 if(isset($_GET['p'])) { $num_page= $_GET['p']; } else { $num_page = 1; }
 
 $previous_rows = ($num_page - 1) * $num_rows_x_page;
 
 // Filter of Type Creature
-$filter_type = isset($_GET["type"]) ? $_GET["type"] : '' ;
+$filter_type = isset($_GET["type"]) ? $_GET["type"] : '';
 
 switch ($filter_type) {
 	case 'material':
@@ -40,7 +40,7 @@ switch ($filter_type) {
 }
 
 // Filter of Type Creature
-$filter_finished = isset($_GET["finished"]) ? $_GET["finished"] : '' ;
+$filter_finished = isset($_GET["finished"]) ? $_GET["finished"] : '';
 
 switch ($filter_finished) {
 	case 'yes':
@@ -51,7 +51,13 @@ switch ($filter_finished) {
 		break;
 	default:
 		$filter_fini = '';
-}	
+}
+
+// Search
+$search = isset($_GET["search"]) ? strtolower(trim($_GET["search"])) : '';
+
+// SQL SELECT
+$select = 'id, date_add, id_author, name_author, name, description, sketch, modeled, textured, finished';
 
 // SQL
 if ( ($filter_type != '') || ($filter_fini != '') ) {
@@ -70,15 +76,21 @@ if ( ($filter_type != '') || ($filter_fini != '') ) {
 		
 	}
 	
-	$sql = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "inimat_creatures " . $filters . " ORDER BY date_add DESC LIMIT " . $previous_rows . " , " . $num_rows_x_page, ARRAY_A);
+	$sql = $wpdb->get_results("SELECT " . $select . " FROM " . $wpdb->prefix . "inimat_creatures " . $filters . " ORDER BY date_add DESC LIMIT " . $previous_rows . " , " . $num_rows_x_page, ARRAY_A);
 	
-	$num_total_records = count( $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "inimat_creatures " . $filters . " ORDER BY id", ARRAY_A) );
+	$num_total_records = count( $wpdb->get_results("SELECT id FROM " . $wpdb->prefix . "inimat_creatures " . $filters, ARRAY_A) );
+	
+} elseif ($search != '') {
+	
+	$sql = $wpdb->get_results("SELECT " . $select . " FROM " . $wpdb->prefix . "inimat_creatures WHERE `name` LIKE '%" . $search . "%' ORDER BY date_add DESC LIMIT " . $previous_rows . " , " . $num_rows_x_page, ARRAY_A);
+	
+	$num_total_records = count( $wpdb->get_results("SELECT id FROM " . $wpdb->prefix . "inimat_creatures WHERE `name` LIKE '%" . $search . "%'", ARRAY_A) );
 	
 } else {
 	
-	$sql = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "inimat_creatures ORDER BY date_add DESC LIMIT " . $previous_rows . " , " . $num_rows_x_page, ARRAY_A);
+	$sql = $wpdb->get_results("SELECT " . $select . " FROM " . $wpdb->prefix . "inimat_creatures ORDER BY date_add DESC LIMIT " . $previous_rows . " , " . $num_rows_x_page, ARRAY_A);
 	
-	$num_total_records = count( $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "inimat_creatures ORDER BY id", ARRAY_A) );
+	$num_total_records = count( $wpdb->get_results("SELECT id FROM " . $wpdb->prefix . "inimat_creatures", ARRAY_A) );
 	
 }
 
@@ -136,19 +148,11 @@ $paginator->setDisplayLinkPrev(true);
 ## HTML
 
 ?>
-    
-    <form for="form_search_creature" name="form_search_creature" id="form_search_creature" action="admin.php" method="GET">
-    <p class="search-box">
-    	<input type="hidden" name="page" value="wpinimat/classifier_creatures/search" />
-    	<input type="text" name="search_creature" id="search_creature" value="" class="control text">&nbsp;
-        <input type="submit" id="post-query-submit" value="<?php _e('Search', 'wpinimat_languages'); ?>" class="button">
-    </p>
-    </form>
+
+	<form name="form_creature" id="form_creature" action="admin.php" method="GET">
+    <input type="hidden" name="page" value="wpinimat/classifier_creatures" />
 	
     <div class="tablenav top">
-    <form name="form_creature" id="form_creature" action="admin.php" method="GET">
-    	<input type="hidden" name="page" value="wpinimat/classifier_creatures" />
-        
         <div class="alignleft actions">
             <select name="finished">
                 <option value=""><?php _e('Show all creatures', 'wpinimat_languages'); ?></option>
@@ -168,6 +172,11 @@ $paginator->setDisplayLinkPrev(true);
             </select>
             <input type="submit" id="submit" class="button" value="<?php _e('Filter', 'wpinimat_languages'); ?>">
         </div>
+        
+        <p class="search-box">
+            <input type="text" name="search" id="search">
+            <input type="submit" id="post-query-submit" value="<?php _e('Search', 'wpinimat_languages'); ?>" class="button">
+        </p>
 	</form>
     
 	<?php echo $paginator->build(); ?>

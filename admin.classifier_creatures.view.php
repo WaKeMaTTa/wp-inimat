@@ -6,8 +6,8 @@ if ( !function_exists( 'add_action' ) ) {
 }
 
 // Includes
-require( WPINIMAT_PLUGIN_PATH . 'class/Zebra_Pagination.php' );
-require( WPINIMAT_PLUGIN_PATH . 'class/Zebra_Image.php' );
+require_once( WPINIMAT_PLUGIN_PATH . 'class/Zebra_Pagination.php' );
+require_once( WPINIMAT_PLUGIN_PATH . 'class/Zebra_Image.php' );
 
 // var globlas
 global $wpdb, $current_user;

@@ -6,8 +6,11 @@ if ( !function_exists( 'add_action' ) ) {
 }
 
 // Includes
-require( WPINIMAT_PLUGIN_PATH . 'class/zebra_form/Zebra_Form.php' );
-require( WPINIMAT_PLUGIN_PATH . 'class/Zebra_Image.php' );
+require_once( WPINIMAT_PLUGIN_PATH . 'class/zebra_form/Zebra_Form.php' );
+require_once( WPINIMAT_PLUGIN_PATH . 'class/Zebra_Image.php' );
+require_once( WPINIMAT_PLUGIN_PATH . 'class/Inimat_Functions.php' );
+
+$functions = new Inimat_Functions();
 
 // var globlas
 global $wpdb, $current_user;
@@ -552,7 +555,7 @@ if (isset($_GET["select_creature"]) == FALSE) {
 		
 			$wpdb->prefix."inimat_creatures",
 			array (
-				 'date_edit' => date(), 
+				 'date_edit' => date('Y-m-d H:i:s'), 
 				 'id_author' => $sql_id_author, 
 				 'name_author' => $sql_name_author, 
 				 'name' => $_POST["name"], 
@@ -576,24 +579,21 @@ if (isset($_GET["select_creature"]) == FALSE) {
 		);
 		
 		// Verify if values is upload to database
+		// Verify if values is upload to database
 		if($query === FALSE) {
 			
-			_e('Failed to upload the values to the database', 'wpinimat_languages');
+			$form->add_error('error', __('Failed to upload the values to the database', 'wpinimat_languages'));
 			
 		} else {
 			
-			echo '<div class="thanks_add_creature"><p>';
-			
-			_e('The creature has been changed successfully!', 'wpinimat_languages');
-			
-			echo '</p></div>';
+			$functions->msg(__('The creature has been changed successfully!', 'wpinimat_languages'), 'correct');
 			
 		}
 		
 		// debug mode
 		if (WP_DEBUG == TRUE) {
 			
-			echo '<h1>Debug Mode:</h1>';
+			echo '<h3>Debug Mode:</h3>';
 		
 			print_r('<pre>');
 			
