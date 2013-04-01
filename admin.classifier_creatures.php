@@ -82,7 +82,11 @@ if ( ($filter_type != '') || ($filter_fini != '') ) {
 	
 }
 
-$paginator = new Page_Lite($num_total_records, 'admin.php?page=wpinimat/classifier_creatures');
+$url = 'admin.php?page=wpinimat/classifier_creatures';
+$url .= isset($_GET["finished"]) ? '&finished=' . $_GET["finished"] : '';
+$url .= isset($_GET["type"]) ? '&type=' . $_GET["type"] : '';
+
+$paginator = new Page_Lite($num_total_records, $url);
 
 $paginator->setAutoIdentifier(true);
 
@@ -167,10 +171,7 @@ $paginator->setDisplayLinkPrev(true);
 	</form>
     
 	<?php echo $paginator->build(); ?>
-        
     </div>
-    
-</form>
     
     <table class="wp-list-table widefat fixed posts" cellspacing="0">
     <thead>
