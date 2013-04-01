@@ -13,7 +13,7 @@ require_once( WPINIMAT_PLUGIN_PATH . 'class/Page_Lite.php' );
 
 $functions = new Inimat_Functions();
 
-$num_rows_x_page = 20;
+$num_rows_x_page = 2;
 
 if(isset($_GET['p'])) { $num_page= $_GET['p']; } else { $num_page = 1; }
 
@@ -43,23 +43,22 @@ switch ($filter_type) {
 $filter_finished = isset($_GET["finished"]) ? $_GET["finished"] : '' ;
 
 switch ($filter_finished) {
-	case 1:
-		$filter_finished = 1;
+	case 'yes':
+		$filter_fini = 1;
 		break;
-	case 0:
-		$filter_finished = 0;
+	case 'no':
+		$filter_fini = 0;
 		break;
 	default:
-		$filter_finished = '';
+		$filter_fini = '';
 }	
 
 // SQL
-
-if ( ($filter_type !== '') || ($filter_finished !== '') ) {
+if ( ($filter_type != '') || ($filter_fini != '') ) {
 	
-	if (($filter_type !== '') && ($filter_finished !== '')) {
+	if (($filter_type != '') && ($filter_fini != '')) {
 		
-		$filters = "WHERE `type` = '" . $filter_type . "' AND `finished` = '" . $filter_finished . "'";
+		$filters = "WHERE `type` = '" . $filter_type . "' AND `finished` = '" . $filter_fini . "'";
 		
 	} elseif ($filter_type !== '') {
 		
@@ -67,7 +66,7 @@ if ( ($filter_type !== '') || ($filter_finished !== '') ) {
 		
 	} else {
 		
-		$filters = "WHERE `finished` = '" . $filter_finished . "'";
+		$filters = "WHERE `finished` = '" . $filter_fini . "'";
 		
 	}
 	
@@ -133,8 +132,6 @@ $paginator->setDisplayLinkPrev(true);
 ## HTML
 
 ?>
-
-	<?php echo $functions->html_filter_type($filter_type); ?>
     
     <form for="form_search_creature" name="form_search_creature" id="form_search_creature" action="admin.php" method="GET">
     <p class="search-box">
@@ -145,19 +142,31 @@ $paginator->setDisplayLinkPrev(true);
     </form>
 	
     <div class="tablenav top">
-    <form name="form_finished_creature" id="form_finished_creature" action="admin.php" method="GET">
+    <form name="form_creature" id="form_creature" action="admin.php" method="GET">
     	<input type="hidden" name="page" value="wpinimat/classifier_creatures" />
+        
         <div class="alignleft actions">
             <select name="finished">
-                <option value="" selected="selected"><?php _e('Show all creatures', 'wpinimat_languages'); ?></option>
-                <option value="0" <?php echo ($filter_finished === 0) ? 'selected="selected" >' : '>'; _e('Only creatures no finished', 'wpinimat_languages'); ?></option>
-                <option value="1" <?php echo ($filter_finished === 1) ? 'selected="selected" >' : '>'; _e('Only creatures finished', 'wpinimat_languages'); ?></option>
+                <option value=""><?php _e('Show all creatures', 'wpinimat_languages'); ?></option>
+                <option value="no" <?php echo ($filter_finished === 'no') ? 'selected="selected" >' : '>'; _e('Only creatures no finished', 'wpinimat_languages'); ?></option>
+                <option value="yes" <?php echo ($filter_finished === 'yes') ? 'selected="selected" >' : '>'; _e('Only creatures finished', 'wpinimat_languages'); ?></option>
+            </select>
+            <input type="submit" id="submit" class="button" value="<?php _e('Filter', 'wpinimat_languages'); ?>">
+        </div>
+        
+        <div class="alignleft actions">
+            <select name="type">
+                <option value=""><?php _e('Show all creatures', 'wpinimat_languages'); ?></option>
+                <option value="material" <?php echo ($filter_type === 'material') ? 'selected="selected" >' : '>'; _e('Material', 'wpinimat_languages'); ?></option>
+                <option value="astral" <?php echo ($filter_type === 'astral') ? 'selected="selected" >' : '>'; _e('Astral', 'wpinimat_languages'); ?></option>
+                <option value="guardian" <?php echo ($filter_type === 'guardian') ? 'selected="selected" >' : '>'; _e('Guardian', 'wpinimat_languages'); ?></option>
+                <option value="samus" <?php echo ($filter_type === 'samus') ? 'selected="selected" >' : '>'; _e('Samus', 'wpinimat_languages'); ?></option>
             </select>
             <input type="submit" id="submit" class="button" value="<?php _e('Filter', 'wpinimat_languages'); ?>">
         </div>
 	</form>
     
-    	<?php echo $paginator->build(); ?>
+	<?php echo $paginator->build(); ?>
         
     </div>
     
