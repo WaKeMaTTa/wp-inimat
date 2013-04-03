@@ -62,4 +62,4 @@ It could be any series, but the difference is that you can participate in your d
 In addition, the entire series is made with open and free software: especially use Blender to model our creatures, characters ... although we also use auxiliary software like phpBB, GIMP, Geany ...
 And one of the most important bases is that everything we do as we provide you with a Creative Commons license. This means you could use our creatures and other models for your own projects.
 
-LINK: [www.INIMAT.org][www.INIMAT.org]
+LINK: [www.INIMAT.org](www.INIMAT.org)
