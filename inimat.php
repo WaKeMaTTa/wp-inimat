@@ -3,7 +3,7 @@
 Plugin Name: WP Inimat
 Plugin URI: https://github.com/WaKeMaTTa/WP-Inimat
 Description: WP Inimat
-Version: 1.0.0
+Version: 1.0
 Author: WaKeMaTTa (Mohamed Ziata)
 Email: m.ziata@hotmail.com
 Author URI: https://github.com/WaKeMaTTa/
@@ -29,7 +29,7 @@ Textdomain: wpinimat_languages
 
 // Define the constants
 define( 'WPINIMAT_NAME', 'Inimat' );
-define( 'WPINIMAT_VERSION', '1.0.0' );
+define( 'WPINIMAT_VERSION', '1.0' );
 define( 'WPINIMAT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'WPINIMAT_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WPINIMAT_ICON32', '<div id="icon-themes" class="icon32" style="background-image:url('.WPINIMAT_PLUGIN_URL.'img/icon.x32.png); background-position: 0 0;"><br /></div>' );
@@ -74,7 +74,7 @@ function wpinimat() {
 			  `finished` tinyint(1) NOT NULL,
 			  PRIMARY KEY (`id`),
 			  UNIQUE KEY `name` (`name`)
-			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;"
+			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;"
 	);
 }
 
