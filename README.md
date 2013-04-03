@@ -47,12 +47,15 @@ Currently does not have any panel to manage.
 ### Changelog
 
 	= 1.0 =
-	Frist vercion
+	* New Features: Add a creature
+	* New Features: Modify a creatures (option only for adminsitradores)
+	* New Features: View all creatures
+	* New Features: Viewing a single creature with carecteristicas
 
 ### Upgrade Notice
 
 	= 1.0 =
-	Frist vercion is coming soon
+	Frist version released
 
 ### Proyect INIMAT
 
