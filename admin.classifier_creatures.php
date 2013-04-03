@@ -281,11 +281,11 @@ foreach ($sql as $key => $value) {
 				<?php
 					if ($sql[$key]["finished"] == 0) {
 						
-						echo '<img src="' . WPINIMAT_PLUGIN_URL . 'img/cancel-round.png" alt="no" />';
+						echo '<img src="' . WPINIMAT_PLUGIN_URL . 'img/close.x32.png" alt="no" />';
 						
 					} else {
 						
-						echo '<img src="' . WPINIMAT_PLUGIN_URL . 'img/accept-round.png" alt="yes" />';
+						echo '<img src="' . WPINIMAT_PLUGIN_URL . 'img/correct.x32.png" alt="yes" />';
 						
 					}
 				?>

@@ -6,6 +6,7 @@ if ( !function_exists( 'add_action' ) ) {
 }
 
 // Includes
+require_once( WPINIMAT_PLUGIN_PATH . 'class/zebra_form/Zebra_Form.php' );
 require_once( WPINIMAT_PLUGIN_PATH . 'class/Inimat_Functions.php' );
 
 $functions = new Inimat_Functions();
@@ -143,6 +144,84 @@ if (isset($_GET["select_creature"]) == FALSE) {
 		<div class="description">
 
 			<?php echo ucfirst(strtolower($sql[0]["description"])); ?>
+
+		</div>
+
+		<br />
+
+		<p class="sub_title"><?php _e('Files', 'wpinimat_languages'); ?></p>
+
+		<div class="files">
+
+		<table>
+
+			<tr>
+
+				<?php
+
+				if (isset($sketch)) {
+
+					echo '<td><a target="_blank" href="' . WPINIMAT_PLUGIN_URL . 'upload/' . $sketch["file_name"] . '">';
+					echo '<img src="' . WPINIMAT_PLUGIN_URL . 'upload/th/' . $sketch["file_name"] . '" /></a></td>';
+				
+				} else {
+
+					echo '<td><img src="' . WPINIMAT_PLUGIN_URL . 'img/not-img.png" width="100" height="100" /></td>';
+
+				}
+
+				if (isset($modeled)) {
+
+					echo '<td><a target="_blank" href="' . WPINIMAT_PLUGIN_URL . 'upload/' . $modeled["file_name"] . '">';
+					echo '<img src="' . WPINIMAT_PLUGIN_URL . 'upload/th/' . $modeled["file_name"] . '" /></a></td>';
+				
+				} else {
+
+					echo '<td><img src="' . WPINIMAT_PLUGIN_URL . 'img/not-img.png" width="100" height="100" /></td>';
+
+				}
+
+				if (isset($textured)) {
+
+					echo '<td><a target="_blank" href="' . WPINIMAT_PLUGIN_URL . 'upload/' . $textured["file_name"] . '">';
+					echo '<img src="' . WPINIMAT_PLUGIN_URL . 'upload/th/' . $textured["file_name"] . '" /></a></td>';
+				
+				} else {
+
+					echo '<td><img src="' . WPINIMAT_PLUGIN_URL . 'img/not-img.png" width="100" height="100" /></td>';
+
+				}
+
+				if ($sql[0]["file"] != '') {
+
+					$file = unserialize($sql[0]["file"]);
+
+					echo '<td><a target="_blank" href="' . WPINIMAT_PLUGIN_URL . 'upload/' . $file["file_name"] . '">';
+					echo '<img src="' . WPINIMAT_PLUGIN_URL . 'img/zip.png" /></a></td>';
+				
+				} else {
+
+					echo '<td><img src="' . WPINIMAT_PLUGIN_URL . 'img/not-img.png" width="100" height="100" /></td>';
+
+				}
+
+				?>
+
+			</tr>
+
+			<tr>
+
+				<td><?php _e('Sketch', 'wpinimat_languages'); ?></td>
+
+				<td><?php _e('Modeled', 'wpinimat_languages'); ?></td>
+
+				<td><?php _e('Textured', 'wpinimat_languages'); ?></td>
+
+				<td><?php _e('File Blender', 'wpinimat_languages'); ?></td>
+
+			</tr>
+
+		</table>
 
 		</div>
 

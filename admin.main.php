@@ -11,20 +11,50 @@ require_once( WPINIMAT_PLUGIN_PATH . 'class/Inimat_Functions.php' );
 
 $functions = new Inimat_Functions();
 
-// var globlas
-global $wpdb, $current_user;
+$menu = $functions->menu();
 
-// Menu
+foreach ($menu as $key => $value) {
 
-$menu = wpinimat_admin_menu();
+	if (current_user_can( $menu[$key]["capability"] ) == TRUE) {
 
-print_r('<pre>'); print_r($menu);
+		?>
 
-$menu = str_replace('inimat_page_', '', $menu);
+		<div id="welcome-panel" class="welcome-panel">
 
-$menu = str_replace('toplevel_page_', '', $menu);
+			<div class="welcome-panel-content">
 
-print_r('<pre>'); print_r($menu);
+				<h3><?php echo $menu[$key]["title"]; ?></h3>
 
+				<?php
+
+				$pages = count($menu[$key]["page"]);
+
+				for ($i=0; $i<$pages; $i++) {
+
+					if (current_user_can( $menu[$key]["page"][$i]["capability"] ) == TRUE)
+
+						echo '<a class="button button-primary button-hero" href="?page=' . $menu[$key]["page"][$i]["slug"] . '">' . $menu[$key]["page"][$i]["title"] . '</a>&nbsp';
+
+					}
+
+				?>
+			
+			</div>
+
+		</div>
+
+		<?php
+
+	}
+
+}
+
+// debug mode
+if (WP_DEBUG == TRUE) {
+	echo '<h3>Debug Mode:</h3>';
+	print_r('<pre>');
+	print_r($menu);
+	die();
+}
 
 ?>

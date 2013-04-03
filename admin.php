@@ -89,7 +89,7 @@ function wpinimat_admin_menu() {
 	$page["cc_add"] = add_submenu_page(
 		'wpinimat',
 		__( 'Add ‹ Classifier of creatures', 'wpinimat_languages' ),
-		__( 'Add creatures', 'wpinimat_languages' ),
+		__( 'Add a creature', 'wpinimat_languages' ),
 		'read',
 		'wpinimat/classifier_creatures/add',
 		'wpinimat_classifier_creatures_add'
@@ -98,7 +98,7 @@ function wpinimat_admin_menu() {
 	$page["cc_edit"] = add_submenu_page(
 		'wpinimat',
 		__( 'Edit ‹ Classifier of creatures', 'wpinimat_languages' ),
-		__( 'Edit creatures', 'wpinimat_languages' ),
+		__( 'Edit a creature', 'wpinimat_languages' ),
 		'manage_options',
 		'wpinimat/classifier_creatures/edit',
 		'wpinimat_classifier_creatures_edit'
@@ -107,7 +107,7 @@ function wpinimat_admin_menu() {
 	$page["cc_view"] = add_submenu_page(
 		'wpinimat',
 		__( 'View ‹ Classifier of creatures', 'wpinimat_languages' ),
-		__( 'View creatures', 'wpinimat_languages' ),
+		__( 'View a creature', 'wpinimat_languages' ),
 		'read',
 		'wpinimat/classifier_creatures/view',
 		'wpinimat_classifier_creatures_view'

@@ -35,7 +35,7 @@
 	margin-top: 0;
 }
 
-#creature .characteristics, #creature .skills{
+#creature .characteristics, #creature .skills {
 	margin-left: 340px;
 }
 
@@ -119,6 +119,10 @@
 
 #creature .skills p img {
 	margin: -3px 0px;
+}
+
+#creature .files table {
+	text-align: center;
 }
 
 /*
@@ -220,3 +224,10 @@ div.warning div.container div.warning a {
     text-indent: -9000px;
     margin: -7px 0px 0px 10px;
 }
+
+/*
+	Main menu
+*/
+
+
+

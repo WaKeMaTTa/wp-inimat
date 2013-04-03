@@ -37,6 +37,45 @@ class Inimat_Functions
 		</div>';
 
     }
+
+    /**
+     *  Menu
+     *
+     *  @return array
+     */
+    function menu() {
+
+		$menu[0]["title"] = 'Classifier of creatures';
+		$menu[0]["slug"] = 'wpinimat/classifier_creatures';
+		$menu[0]["capability"] = 'read';
+
+			$menu[0]["page"][0]["title"] = 'View the creatures';
+			$menu[0]["page"][0]["slug"] = 'wpinimat/classifier_creatures';
+			$menu[0]["page"][0]["capability"] = 'read';
+
+			$menu[0]["page"][1]["title"] = 'Add a creature';
+			$menu[0]["page"][1]["slug"] = 'wpinimat/classifier_creatures/add';
+			$menu[0]["page"][1]["capability"] = 'read';
+
+			$menu[0]["page"][2]["title"] = 'Edit a creature';
+			$menu[0]["page"][2]["slug"] = 'wpinimat/classifier_creatures/edit';
+			$menu[0]["page"][2]["capability"] = 'manage_options';
+
+			$menu[0]["page"][3]["title"] = 'View the creature';
+			$menu[0]["page"][3]["slug"] = 'wpinimat/classifier_creatures';
+			$menu[0]["page"][3]["capability"] = 'read';
+
+		$menu[1]["title"] = 'Settings';
+		$menu[1]["slug"] = 'wpinimat/settings';
+		$menu[1]["capability"] = 'manage_options';
+
+			$menu[1]["page"][0]["title"] = 'Settings';
+			$menu[1]["page"][0]["slug"] = 'wpinimat/settings';
+			$menu[1]["page"][0]["capability"] = 'manage_options';
+
+		return $menu;
+
+    }
 	
 	/**
      *  Path relative
