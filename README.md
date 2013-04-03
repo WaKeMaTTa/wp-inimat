@@ -37,7 +37,7 @@ Currently does not have any panel to manage.
 
 *You have any question? Make it in [here][]*
 
- [here]:https://github.com/WaKeMaTTa/wp-bootcamp/issues
+ [here]:https://github.com/WaKeMaTTa/wp-inimat/issues
 
 ### Screenshots
 
