@@ -25,6 +25,7 @@ Functions provided:
 ### Installation
 
 To install the plugin follow these simple steps:
+
 1. Download the plugin archive
 2. Extract the archive in your `/wp-content/plugins/` directory
 3. Activate the plugin through the Plugins menu in WordPress
