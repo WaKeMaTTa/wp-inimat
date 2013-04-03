@@ -1,4 +1,4 @@
-WP Inimat
+WP INIMAT
 =========
 
 * **Contributor**: WaKeMaTTa
