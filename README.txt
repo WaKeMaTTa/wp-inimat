@@ -35,7 +35,7 @@ To install the plugin follow these simple steps:
 
 Make it in [here][]
 
-  [here]:https://github.com/WaKeMaTTa/wp-bootcamp/issues
+  [here]:https://github.com/WaKeMaTTa/wp-inimat/issues
 
 == Screenshots ==
 
