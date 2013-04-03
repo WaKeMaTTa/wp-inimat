@@ -49,20 +49,20 @@ if (isset($author)) { ?>
     
 		<?php echo $label_gender?>
         
-        <div class="cell"><?php echo $gender_aquatico?></div>
-        <div class="cell"><?php echo $label_gender_aquatico?></div>
+        <div class="cell"><?php echo $gender_aquatic?></div>
+        <div class="cell"><?php echo $label_gender_aquatic?></div>
         <div class="clear"></div>
         
-        <div class="cell"><?php echo $gender_terrestre?></div>
-        <div class="cell"><?php echo $label_gender_terrestre?></div>
+        <div class="cell"><?php echo $gender_terrestrial?></div>
+        <div class="cell"><?php echo $label_gender_terrestrial?></div>
         <div class="clear"></div>
         
-        <div class="cell"><?php echo $gender_vegetal?></div>
-        <div class="cell"><?php echo $label_gender_vegetal?></div>
+        <div class="cell"><?php echo $gender_vegetable?></div>
+        <div class="cell"><?php echo $label_gender_vegetable?></div>
         <div class="clear"></div>
         
-        <div class="cell"><?php echo $gender_volador?></div>
-        <div class="cell"><?php echo $label_gender_volador?></div>
+        <div class="cell"><?php echo $gender_flying?></div>
+        <div class="cell"><?php echo $label_gender_flying?></div>
         <div class="clear"></div>
         
 	</div>

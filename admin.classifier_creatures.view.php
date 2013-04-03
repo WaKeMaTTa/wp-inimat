@@ -6,485 +6,155 @@ if ( !function_exists( 'add_action' ) ) {
 }
 
 // Includes
-require_once( WPINIMAT_PLUGIN_PATH . 'class/Zebra_Pagination.php' );
-require_once( WPINIMAT_PLUGIN_PATH . 'class/Zebra_Image.php' );
+require_once( WPINIMAT_PLUGIN_PATH . 'class/Inimat_Functions.php' );
+
+$functions = new Inimat_Functions();
 
 // var globlas
 global $wpdb, $current_user;
 
-// funcion extra
-function path_relative() {
-	$doc_root = str_ireplace('\\', '/', $_SERVER['DOCUMENT_ROOT']);
-	$plugin_path = str_ireplace('\\', '/', WPINIMAT_PLUGIN_PATH);
-	$path_relative = str_ireplace($doc_root, '', $plugin_path);
-	$path_relative = '/'.$path_relative;
-	return $path_relative;
-}
-
-// instantiate a Zebra_Form object
-$form = new Zebra_Form('form');
-
-// Language for errors form
-if (WPLANG == 'es_ES') {
-	$form->language('espanol');
-}
-
-## Author
-
-if(current_user_can('manage_options')) {
+if (isset($_GET["select_creature"]) == FALSE) {
 	
-	$form->add('label', 'label_author', 'author', __('Author:', 'wpinimat_languages'));
+	// instantiate a Zebra_Form object
+	//$form = new Zebra_Form('form', 'GET');
+	$form = new Zebra_Form('form', 'GET');
 	
-	$obj = $form->add('select', 'author', $current_user->ID-1, array('other' => true, 'style' => 'height: 28px;'));
+	// Language for errors form
+	if (WPLANG == 'es_ES') {
+		$form->language('espanol');
+	}
 	
-	$users = $wpdb->get_results ("SELECT ID, display_name FROM ".$wpdb->users." ORDER BY ID ASC", ARRAY_A );
+	// select criature for edit them
+	
+	$obj = $form->add('hidden', 'page', 'wpinimat/classifier_creatures/view');
+	
+	$form->add('label', 'label_select_creature', 'select_creature', __('Select the creature to edit:', 'wpinimat_languages'));
+	
+	$obj = $form->add('select', 'select_creature', '', array('style' => 'height: 28px;'));
+	
+	$creatures = $wpdb->get_results ("SELECT id, name FROM ".$wpdb->prefix."inimat_creatures ORDER BY id ASC", ARRAY_A );
 	
 	$array_asosiativo = array();
 	
 	for($i=0; $i<$wpdb->num_rows; $i++) {
-		$array_asosiativo[$i] = $users[$i]["display_name"];
+		$array_asosiativo[$i] = $creatures[$i]["name"];
 	}
 	
 	$obj->add_options($array_asosiativo);
 	$obj->set_rule(array(
 	
-		'required' => array('error', 'Author is required!')
+		'required' => array('error', 'Select creature is required!')
 		
 	));
-	
-}
-
-## Name
-
-	$form->add('label', 'label_name', 'name', __('Name creature:', 'wpinimat_languages'));
-	
-	$obj = $form->add('text', 'name');
-	
-	$obj->set_rule(array(
-	
-		'required'	=>  array('error', __('Name of the creature is required!', 'wpinimat_languages')),
-		'alphabet'	=>  array('error', __('Accepts only characters from the alphabet', 'wpinimat_languages')),
-	
-	));
-	
-	$obj->change_case('lower');
-	
-	$form->add('note', 'note_name', 'name', __('Accepts only characters from the alphabet', 'wpinimat_languages'));
-
-## Height
-
-	$form->add('label', 'label_height', 'height', __('Height:', 'wpinimat_languages'));
-	
-	$obj = $form->add('text', 'height');
-	
-	$obj->set_rule(array(
-	
-		'required'	=>  array('error', __('Height of the creature is required!', 'wpinimat_languages')),
-		'float'		=>  array('', 'error', __('Accepts only digits (0 to 9) and/or one dot (.)', 'wpinimat_languages')),
-	
-	));
-	
-	$form->add('note', 'note_height', 'height', __('Accepts only digits (0 to 9) and/or one dot (.)', 'wpinimat_languages'));
-	
-## Width
-
-	$form->add('label', 'label_width', 'width', __('Width:', 'wpinimat_languages'));
-	
-	$obj = $form->add('text', 'width');
-	
-	$obj->set_rule(array(
-	
-		'required'	=>  array('error', __('Width of the creature is required!', 'wpinimat_languages')),
-		'float'		=>  array('', 'error', __('Accepts only digits (0 to 9) and/or one dot (.)', 'wpinimat_languages')),
-	
-	));
-	
-	$form->add('note', 'note_width', 'width', __('Accepts only digits (0 to 9) and/or one dot (.)', 'wpinimat_languages'));
-	
-## Weight
-
-	$form->add('label', 'label_weight', 'weight', __('Weight:', 'wpinimat_languages'));
-	
-	$obj = $form->add('text', 'weight');
-	
-	$obj->set_rule(array(
-	
-		'required'	=>  array('error', __('Weight of the creature is required!', 'wpinimat_languages')),
-		'float'		=>  array('', 'error', __('Accepts only digits (0 to 9) and/or one dot (.)', 'wpinimat_languages')),
-	
-	));
-	
-	$form->add('note', 'note_weight', 'weight', __('Accepts only digits (0 to 9) and/or one dot (.)', 'wpinimat_languages'));
-	
-## Type
-
-	$form->add('label', 'label_type', 'type', __('Type:', 'wpinimat_languages'));
-	
-	$obj = $form->add('radios', 'type', array(
-	
-		'astral'	=>  __('Astral', 'wpinimat_languages'),
-		'guardian'	=>  __('Guardian', 'wpinimat_languages'),
-		'material'	=>  __('Material', 'wpinimat_languages'),
-		'samus'		=>  __('Samus', 'wpinimat_languages'),
-		
-	));
-	
-	$obj->set_rule(array(
-	
-		'required' => array('error', __('Type creature selection is required!', 'wpinimat_languages'))
-	
-	));
-
-## Gender
-
-	$form->add('label', 'label_gender', 'gender', __('Gender:', 'wpinimat_languages'));
-	
-	$obj = $form->add('radios', 'gender', array(
-	
-		'aquatico'	=>  __('Aquatico', 'wpinimat_languages'),
-		'terrestre' =>  __('Terrestre', 'wpinimat_languages'),
-		'vegetal'	=>  __('Vegetal', 'wpinimat_languages'),
-		'volador'	=>  __('Volador', 'wpinimat_languages'),
-		
-	));
-	
-	$obj->set_rule(array(
-	
-		'required' => array('error', __('Type creature selection is required!', 'wpinimat_languages'))
-	
-	));
-	
-## Skills
-		
-	$form->add('label', 'label_skills', 'skills', __('Skills:', 'wpinimat_languages'));
-	
-	$form->add('label', 'label_skills', 'skills', __('Skills:', 'wpinimat_languages'));
-	
-	$obj = $form->add('text', 'skill_1', '', array('style' => 'display: inline; margin-bottom: 5px;'));
-	
-	$obj->change_case('lower');
-	
-	$obj->set_rule(array(
-	
-		'required' => array('error', __('Skill selection is required!', 'wpinimat_languages'))
-	
-	));
-	
-	$obj = $form->add('select', 'type_skill_1', '',  array('style' => 'height: 28px; display: inline; margin-bottom: 5px;'));
-	
-	$obj->add_options(array(
-	
-		''	=>  __('- SELECT -', 'wpinimat_languages'),	
-		'attack'	=>  __('Attack', 'wpinimat_languages'),
-		'defense'	=>  __('Defense', 'wpinimat_languages'),
-		
-	));
-	
-	$obj->set_rule(array(
-	
-		'required' => array('error', __('Type skill selection is required!', 'wpinimat_languages'))
-	
-	));
-	
-	$obj = $form->add('textarea', 'desc_skill_1');
-	
-	$obj->change_case('lower');
-	
-## Habitat
-
-	$form->add('label', 'label_habitat', 'habitat', __('Habitat:', 'wpinimat_languages'));
-	
-	$obj = $form->add('textarea', 'habitat');
-	
-	$obj->set_rule(array(
-	
-		'required' => array('error', __('Habitat is required!', 'wpinimat_languages'))
-	
-	));
-	
-	$obj->change_case('lower');
-	
-## Description
-
-	$form->add('label', 'label_description', 'description', __('Description:', 'wpinimat_languages'));
-	
-	$obj = $form->add('textarea', 'description', '', array('style' => 'height: 250px;'));
-	
-	$obj->set_rule(array(
-	
-		'required' => array('error', __('Description is required!', 'wpinimat_languages'))
-	
-	));
-	
-	$obj->change_case('lower');
-	
-## Imagen Sketch
-
-	$form->add('label', 'label_imgSketch', 'imgSketch', __('Imagen Sketch:', 'wpinimat_languages'));
-	
-	$obj = $form->add('file', 'imgSketch');
-	
-	$obj->set_rule(array(
-	
-		// 'required'  =>  array('error', __('An image is required!', 'wpinimat_languages')),
-        'upload'    =>  array(path_relative().'upload', ZEBRA_FORM_UPLOAD_RANDOM_NAMES, 'error', __('Could not upload file!<br>Check that the "creatureSs" folder exists and that it is writable', 'wpinimat_languages')),
-        'image'  =>  array('error', __('File must be a jpg, png or gif image!', 'wpinimat_languages')),
-        'filesize'  =>  array(1048576, 'error', __('File size must not exceed 1 MB!', 'wpinimat_languages')),
-	
-	));
-	
-    $form->add('note', 'note_imgSketch', 'imgSketch', __('File must have the .jpg, .jpeg, png or .gif extension, and no more than 1 MB!', 'wpinimat_languages'));
-	
-## Imagen Modeled
-
-	$form->add('label', 'label_imgModeled', 'imgModeled', __('Imagen Modeled:', 'wpinimat_languages'));
-	
-	$obj = $form->add('file', 'imgModeled');
-	
-	$obj->set_rule(array(
-	
-		// 'required'  =>  array('error', __('An image is required!', 'wpinimat_languages')),
-        'upload'    =>  array(path_relative().'upload', ZEBRA_FORM_UPLOAD_RANDOM_NAMES, 'error', __('Could not upload file!<br>Check that the "creaturesMMM" folder exists and that it is writable', 'wpinimat_languages')),
-        'image'  =>  array('error', __('File must be a jpg, png or gif image!', 'wpinimat_languages')),
-        'filesize'  =>  array(1048576, 'error', __('File size must not exceed 1 MB!', 'wpinimat_languages')),
-	
-	));
-	
-	$form->add('note', 'note_imgModeled', 'imgModeled', __('File must have the .jpg, .jpeg, png or .gif extension, and no more than 1 MB!', 'wpinimat_languages'));
-	
-## Imagen Textured
-
-	$form->add('label', 'label_imgTextured', 'imgTextured', __('Imagen Textured:', 'wpinimat_languages'));
-	
-	$obj = $form->add('file', 'imgTextured');
-	
-	$obj->set_rule(array(
-	
-		// 'required'  =>  array('error', __('An image is required!', 'wpinimat_languages')),
-        'upload'    =>  array(path_relative().'upload', ZEBRA_FORM_UPLOAD_RANDOM_NAMES, 'error', __('Could not upload file!<br>Check that the "creatures" folder exists and that it is writable', 'wpinimat_languages')),
-        'image'  =>  array('error', __('File must be a jpg, png or gif image!', 'wpinimat_languages')),
-        'filesize'  =>  array(1048576, 'error', __('File size must not exceed 1 MB!', 'wpinimat_languages')),
-	
-	));
-	
-	$form->add('note', 'note_imgTextured', 'imgTextured', __('File must have the .jpg, .jpeg, png or .gif extension, and no more than 1 MB!', 'wpinimat_languages'));
-
-## File
-
-	$form->add('label', 'label_file', 'file', __('File blender (zipped):', 'wpinimat_languages'));
-	
-	$obj = $form->add('file', 'file');
-	
-	$obj->set_rule(array(
-	
-		// 'required'  =>  array('error', __('An image is required!', 'wpinimat_languages')),
-		'upload'    =>  array(path_relative().'upload', ZEBRA_FORM_UPLOAD_RANDOM_NAMES, 'error', __('Could not upload file!<br>Check that the "upload" folder exists inside and that it is writable', 'wpinimat_languages')),
-		'filetype'  =>  array('zip, tgz, rar, bzip', 'error', __('File must be a zip, rar or tgz!', 'wpinimat_languages')),
-		'filesize'  =>  array(10485760, 'error', __('File size must not exceed 10 MB!', 'wpinimat_languages')),
-	
-	));
-	
-	$form->add('note', 'note_file', 'file', __('File must have the .zip extension, and no more than 10 MB!', 'wpinimat_languages'));
-
-## License
-
-    $obj = $form->add('checkbox', 'license', 1,  array('style' => 'float: left; margin-right: 6px;'));
-	
-    $form->add('label', 'label_license_1', 'license_1', __('I accept the license ', 'wpinimat_languages') . '<a href="http://creativecommons.org/licenses/by-sa/3.0" target="_blank">Creative Commons By-SA 3.0</a>', array('style' => 'font-weight:normal'));
-	
-	$obj->set_rule(array(
-	
-		'required' => array('error', 'Accept the license is required!')
-	
-	));
-	
-## Finished
-
-if(current_user_can('manage_options')) {
-	
-	 $obj = $form->add('checkbox', 'finished', 1,  array('style' => 'float: left; margin-right: 6px;'));
-	
-    $form->add('label', 'label_finished_1', 'finished_1', __('Check the box if the creature is 100% completed', 'wpinimat_languages'), array('style' => 'font-weight:normal'));
-	
-}
-
-## Submit
 
     $form->add('submit', 'btnsubmit', __('Submit', 'wpinimat_languages'));
+	
+	// validate the form
+	if($form->validate()) { }
+	
+	// auto generate output, labels above form elements
+	$form->render();
 
-// validate the form
-if($form->validate()) {
+} elseif ($wpdb->query( $wpdb->prepare("SELECT id FROM ".$wpdb->prefix."inimat_creatures WHERE id = %d", $_GET["select_creature"]+1) ) != FALSE) {
+
+	// recover ID creature
+	$id_creature = $_GET["select_creature"] + 1;
 	
-	// Verify name the creature not is duplicate
-	$query = $wpdb -> query( $wpdb -> prepare("SELECT id FROM ".$wpdb->prefix."inimat_creatures WHERE name = %s", $_POST["name"]) );
-	
-	if (!$query <= 0) {
+	// recover data from the database of the creature
+	$sql = $wpdb->get_results ("SELECT * FROM ".$wpdb->prefix."inimat_creatures WHERE id = ".$id_creature, ARRAY_A );
+
+	if ($sql[0]["textured"] != '') {
+						
+		$textured = unserialize($sql[0]["textured"]);
+		$img = WPINIMAT_PLUGIN_URL . 'upload/' . $textured["file_name"];
 		
-		$form->add_error('error', __('Name the creature is duplicate, please change name of the creature', 'wpinimat_languages'));
+	} elseif ($sql[0]["modeled"] != '') {
+		
+		$modeled = unserialize($sql[0]["modeled"]);
+		$img = WPINIMAT_PLUGIN_URL . 'upload/' . $modeled["file_name"];
+		
+	} elseif ($sql[0]["sketch"] != '') {
+		
+		$sketch = unserialize($sql[0]["sketch"]);
+		$img = WPINIMAT_PLUGIN_URL . 'upload/' . $sketch["file_name"];
 		
 	} else {
 		
-		// Create thumbnail of imgSketch
-		$sql_imgSketch = '';
+		// no image
+		$img = WPINIMAT_PLUGIN_URL . 'img/not_img.png';
 		
-		if ( isset($form->file_upload["imgSketch"]) ) {
-			
-			$image = new Zebra_Image();
-			
-			$image->source_path = WPINIMAT_PLUGIN_PATH . 'upload/' . $form->file_upload["imgSketch"]["file_name"];
-			
-			$image->target_path = WPINIMAT_PLUGIN_PATH . 'upload/th/' . $form->file_upload["imgSketch"]["file_name"];
-			
-			$image->resize(100, 100, ZEBRA_IMAGE_NOT_BOXED, -1);
-			
-			$sql_imgSketch = serialize($form->file_upload["imgSketch"]);
-			
-		}
-		
-		// Create thumbnail of imgModeled
-		$sql_imgModeled = '';
-		
-		if ( isset($form->file_upload["imgModeled"]) ) {
-			
-			$image = new Zebra_Image();
-			
-			$image->source_path = WPINIMAT_PLUGIN_PATH . 'upload/' . $form->file_upload["imgModeled"]["file_name"];
-			
-			$image->target_path = WPINIMAT_PLUGIN_PATH . 'upload/th/' . $form->file_upload["imgModeled"]["file_name"];
-			
-			$image->resize(100, 100, ZEBRA_IMAGE_NOT_BOXED, -1);
-			
-			$sql_imgModeled = serialize($form->file_upload["imgModeled"]);
-			
-		}
-		
-		// Create thumbnail of imgTextured
-		$sql_imgTextured = '';
-		
-		if ( isset($form->file_upload["imgTextured"]) ) {
-			
-			$image = new Zebra_Image();
-			
-			$image->source_path = WPINIMAT_PLUGIN_PATH . 'upload/' . $form->file_upload["imgTextured"]["file_name"];
-			
-			$image->target_path = WPINIMAT_PLUGIN_PATH . 'upload/th/' . $form->file_upload["imgTextured"]["file_name"];
-			
-			$image->resize(100, 100, ZEBRA_IMAGE_NOT_BOXED, -1);
-			
-			$sql_imgTextured = serialize($form->file_upload["imgTextured"]);
-			
-		}
-		
-		// File
-		$sql_file = '';
-		
-		if ( isset($form->file_upload["file"]) ) {
-			
-			$sql_file = serialize($form->file_upload["file"]);
-			
-		}
-		
-		if (isset($_POST["author"])) {
-			
-			// Author in not registred in database
-			if ($_POST["author"] == 'other') {
-				
-				$sql_id_author = 0;
-				
-				$sql_name_author = $_POST["author_other"];
-				
-			} else {
-				// Author is registred in database
-				$sql_id_author = $_POST["author"]+1;
-				
-				$sql_name_author = '';
-				
-			}
-			
-		} else {
-			
-			$sql_id_author = $current_user->ID;
-			
-			$sql_name_author = '';
-			
-		}
-		
-		// Prepare skills for SQL
-		$array_skills = array();
-		
-		for($i=1; $i<=$_POST["skill_total"]; $i++) {
-			
-			$array_skills[$i][0] = $_POST["skill_".$i];
-			
-			$array_skills[$i][1] = $_POST["type_skill_".$i];
-			
-			$array_skills[$i][2] = $_POST["desc_skill_".$i];
-		}
-		
-		$sql_skills = serialize($array_skills);
-		
-		// finished
-		if(isset($_POST["finished"])) {
-			
-			$sql_finished = $_POST["finished"];
-			
-		} else {
-			
-			$sql_finished = 0;
-			
-		}
-		
-		// Upload values to database		
-		$query = $wpdb -> query( 
-		
-			$wpdb -> prepare("
-				INSERT INTO ".$wpdb->prefix."inimat_creatures ( 
-					date_add, id_author, name_author, name, height, width, weight, type, gender, skills, habitat, description, sketch, modeled, textured, file, license, finished
-				) VALUES ( 
-					CURRENT_TIMESTAMP, %d, %s, %s, %f, %f, %f, %s, %s, %s, %s, %s, %s, %s, %s, %s, %d, %d 
-				)",
-				
-				$sql_id_author, $sql_name_author, $_POST["name"], $_POST["height"], $_POST["width"], $_POST["weight"], $_POST["type"], $_POST["gender"], $sql_skills, $_POST["habitat"], $_POST["description"], $sql_imgSketch, $sql_imgModeled, $sql_imgTextured, $sql_file, $_POST["license"], $sql_finished
-				
-			)
-			
-		);
-		
-		// Verify if values is upload to database
-		if($query === FALSE) {
-			
-			 $form->add_error('error', __('Failed to upload the values to the database', 'wpinimat_languages'));
-			
-		} else {
-			
-			echo '<div class="thanks_add_creature"><p>';
-			
-			_e('Thanks for add creature!', 'wpinimat_languages');
-			
-			echo '</p></div>';
-			
-		}
-		
-		// debug mode
-		if (WP_DEBUG == TRUE) {
-			
-			echo '<h1>Debug Mode:</h1>';
-			
-			print_r('<pre>');
-			
-			print_r($_POST);
-			
-			print_r($form->file_upload);
-			
-			die();
-		
-		}
-	
 	}
-}
+
+	$skills = unserialize($sql[0]["skills"]);
+
+	?>
+
+	<div id="creature">
+
+		<img class="img" src="<?php echo $img; ?>" width="280" height="280" />
+
+		<p class="title"><?php echo ucfirst(strtolower($sql[0]["name"])); ?></p>
+
+		<p class="sub_title"><?php _e('Characteristics', 'wpinimat_languages'); ?></p>
+
+		<div class="characteristics">
+
+			<?php echo '<p><b>' . __('Height', 'wpinimat_languages') . '</b> ' . $sql[0]["height"] . ' ' . __('meters', 'wpinimat_languages') . '</p>'; ?>
+
+			<?php echo '<p><b>' . __('Width', 'wpinimat_languages') . '</b> ' . $sql[0]["width"] . ' ' . __('meters', 'wpinimat_languages') . '</p>'; ?>
+
+			<?php echo '<p><b>' . __('Weight', 'wpinimat_languages') . '</b> ' . $sql[0]["weight"] . ' ' . __('Kg', 'wpinimat_languages') . '</p>'; ?>
+
+			<?php echo '<p><b>' . __('Type', 'wpinimat_languages') . '</b> <span class="type ' . $sql[0]["type"] . '">' . $sql[0]["type"] . '</span></p>'; ?>
+
+			<?php echo '<p><b>' . __('Gender', 'wpinimat_languages') . '</b> <span class="gender ' . $sql[0]["gender"] . '">' . $sql[0]["gender"] . '</span></p>'; ?>
+
+			<?php echo '<p><b>' . __('Habitat', 'wpinimat_languages') . '</b> ' . ucfirst(strtolower($sql[0]["habitat"])) . '</p>'; ?>
+
+		</div>
+
+		<br />
+
+		<p class="sub_title"><?php _e('Skills', 'wpinimat_languages'); ?></p>
+
+		<div class="skills">
+
+		<?php
+
+		foreach ($skills as $key => $value) {
+
+			$skill_name = ucfirst(strtolower($skills[$key][0]));
+
+			$skill_type = ($skills[$key][1] == 'attack') ? __('Attack', 'wpinimat_languages') : __('Defense', 'wpinimat_languages');
+
+			$skill_desc = ucfirst(strtolower($skills[$key][2]));
+
+			echo '<p>' . $skill_type . '<span class="' . $skills[$key][1] . '">' . $skill_name 
+				.' <img src="' . WPINIMAT_PLUGIN_URL . 'img/info.x16.png" title="' . $skill_desc . '"></span></p>';
+
+		}
+
+		?>
+
+		</div>
+
+		<p class="sub_title"><?php _e('Description', 'wpinimat_languages'); ?></p>
+
+		<div class="description">
+
+			<?php echo ucfirst(strtolower($sql[0]["description"])); ?>
+
+		</div>
+
+	</div>
+
+	<?php
 	
-// auto generate output, labels above form elements
-//$form->render('*horizontal');
-$form->render(WPINIMAT_PLUGIN_PATH.'admin.classifier_creatures.add.template.php');
+} else {
+	
+	// error not found creature
+	$functions->msg(__('Not found creature.', 'wpinimat_languages'), 'warning');
+	
+}
 
 ?>

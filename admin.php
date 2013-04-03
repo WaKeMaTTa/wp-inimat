@@ -27,7 +27,7 @@ function wpinimat_admin_warnings() {
 				);
 			?>
 				<div class='error'>
-					<p><strong><?php echo WPBOOTCAMP_NAME; ?> Error Code: <?php echo $alert['code']; ?></strong></p>
+					<p><strong><?php echo WPINIMAT_NAME; ?> Error Code: <?php echo $alert['code']; ?></strong></p>
 					<p><?php esc_html_e( $alert['msg'], 'wpinimat_languages' ); ?></p>
 					<p>Report this error <a href="https://github.com/WaKeMaTTa/wp-inimat/issues">here</a></p>
 				</div>
@@ -67,62 +67,60 @@ add_action('admin_init', 'wpinimat_admin_init');
 // Function create the admin menu
 function wpinimat_admin_menu() {
 	
-	$page[0] = add_menu_page(	WPINIMAT_NAME,							# page_title
-								WPINIMAT_NAME,							# menu_title
-								'level_0',								# capability
-								'wpinimat',								# menu_slug
-								'wpinimat_admin_page',					# function (optional)
-								WPINIMAT_PLUGIN_URL.'img/icon16.png'	# icon_url (optional)
-							);
+	$page["main"] = add_menu_page(
+		WPINIMAT_NAME,							# page_title
+		WPINIMAT_NAME,							# menu_title
+		'read',									# capability
+		'wpinimat',								# menu_slug
+		'wpinimat_admin_page',					# function (optional)
+		WPINIMAT_PLUGIN_URL.'img/icon.x16.png'	# icon_url (optional)
+	);
 					
 	
-	$page[1] = add_submenu_page(	'wpinimat',												# parent_slug
-									__( 'Classifier of creatures', 'wpinimat_languages' ),	# page_title
-									__( 'Classifier of creatures', 'wpinimat_languages' ),	# menu_title
-									'read',													# capability
-									'wpinimat/classifier_creatures',						# menu_slug
-									'wpinimat_classifier_creatures'							# function (optional)
-								);
+	$page["cc"] = add_submenu_page(
+		'wpinimat',												# parent_slug
+		__( 'Classifier of creatures', 'wpinimat_languages' ),	# page_title
+		__( 'Classifier of creatures', 'wpinimat_languages' ),	# menu_title
+		'read',													# capability
+		'wpinimat/classifier_creatures',						# menu_slug
+		'wpinimat_classifier_creatures'							# function (optional)
+	);
 	
-	$page[2] = add_submenu_page(	'wpinimat',													# parent_slug
-									__( 'Add ‹ Classifier of creatures', 'wpinimat_languages' ),# page_title
-									__( 'Add creatures', 'wpinimat_languages' ),				# menu_title
-									'read',														# capability
-									'wpinimat/classifier_creatures/add',						# menu_slug
-									'wpinimat_classifier_creatures_add'							# function (optional)
-								);
+	$page["cc_add"] = add_submenu_page(
+		'wpinimat',
+		__( 'Add ‹ Classifier of creatures', 'wpinimat_languages' ),
+		__( 'Add creatures', 'wpinimat_languages' ),
+		'read',
+		'wpinimat/classifier_creatures/add',
+		'wpinimat_classifier_creatures_add'
+	);
 								
-	$page[3] = add_submenu_page(	'wpinimat',													# parent_slug
-									__( 'Edit ‹ Classifier of creatures', 'wpinimat_languages' ),# page_title
-									__( 'Edit creatures', 'wpinimat_languages' ),				# menu_title
-									'manage_options',											# capability
-									'wpinimat/classifier_creatures/edit',						# menu_slug
-									'wpinimat_classifier_creatures_edit'						# function (optional)
-								);
+	$page["cc_edit"] = add_submenu_page(
+		'wpinimat',
+		__( 'Edit ‹ Classifier of creatures', 'wpinimat_languages' ),
+		__( 'Edit creatures', 'wpinimat_languages' ),
+		'manage_options',
+		'wpinimat/classifier_creatures/edit',
+		'wpinimat_classifier_creatures_edit'
+	);
 								
-	$page[4] = add_submenu_page(	'wpinimat',													# parent_slug
-									__( 'View ‹ Classifier of creatures', 'wpinimat_languages' ),# page_title
-									__( 'View creatures', 'wpinimat_languages' ),				# menu_title
-									'read',														# capability
-									'wpinimat/classifier_creatures/view',						# menu_slug
-									'wpinimat_classifier_creatures_view'						# function (optional)
-								);
-								
-	$page[5] = add_submenu_page(	'wpinimat',													# parent_slug
-									__( 'Search ‹ Classifier of creatures', 'wpinimat_languages' ),# page_title
-									FALSE,				# menu_title
-									'read',														# capability
-									'wpinimat/classifier_creatures/search',						# menu_slug
-									'wpinimat_classifier_creatures_search'						# function (optional)
-								);
-					
-	$page[6] = add_submenu_page(	'wpinimat',								# parent_slug
-									__( 'Settings', 'wpinimat_languages' ),	# page_title
-									__( 'Settings', 'wpinimat_languages' ),	# menu_title
-									'manage_options',						# capability
-									'wpinimat/settings',					# menu_slug
-									'wpinimat_settings'						# function (optional)
-								);
+	$page["cc_view"] = add_submenu_page(
+		'wpinimat',
+		__( 'View ‹ Classifier of creatures', 'wpinimat_languages' ),
+		__( 'View creatures', 'wpinimat_languages' ),
+		'read',
+		'wpinimat/classifier_creatures/view',
+		'wpinimat_classifier_creatures_view'
+	);
+	
+	$page["settings"] = add_submenu_page(
+		'wpinimat',
+		__( 'Settings', 'wpinimat_languages' ),
+		__( 'Settings', 'wpinimat_languages' ),
+		'manage_options',
+		'wpinimat/settings',
+		'wpinimat_settings'
+	);
 	
 	// Register CSS and Js			
 	foreach ($page as &$value) {
@@ -130,7 +128,8 @@ function wpinimat_admin_menu() {
 		add_action( 'admin_print_scripts-'.$value, 'wpinimat_admin_script' );
 	}
 	unset($value);
-										
+
+	return $page;										
 }
 
 // Style CSS
@@ -162,14 +161,8 @@ function wpinimat_admin_script() {
 function wpinimat_admin_page() {	
 	echo '<div class="wrap">';
 	echo WPINIMAT_ICON32 . '<h2>Inimat</h2>';
-	echo 'PAGE PRINCIPAL!';
-	echo "https://docs.google.com/folder/d/0B2Q3CRfnvEm3VGNYamN5c0NIVGs/edit?usp=sharing";
+	require( plugin_dir_path(__FILE__) . 'admin.main.php');
 	echo '</div>';
-}
-
-// Function for settings the plugin
-function wpinimat_settings() {
-	echo 'wpinimat_settings';
 }
 
 // Function for wpinimat_classifier_creatures the plugin
@@ -208,12 +201,12 @@ function wpinimat_classifier_creatures_view() {
 	echo '</div>';
 }
 
-// Function for wpinimat_classifier_creatures_edit the plugin
-function wpinimat_classifier_creatures_search() {
+// Function for settings the plugin
+function wpinimat_settings() {
 	echo '<div class="wrap">';
-	echo WPINIMAT_ICON32 . '<h2>Inimat - ' . __( 'Classifier of creatures', 'wpinimat_languages' ) . '</h2>';
-	echo '<h3>' . __('Search creature') . '</h3>';
-	require( plugin_dir_path(__FILE__) . 'admin.classifier_creatures.search.php');
+	echo WPINIMAT_ICON32 . '<h2>Inimat - ' . __( 'Settings', 'wpinimat_languages' ) . '</h2>';
+	echo '<h3>' . __('In this moments not have settings.') . '</h3>';
+	//require( plugin_dir_path(__FILE__) . 'admin.classifier_creatures.settings.php');
 	echo '</div>';
 }
 

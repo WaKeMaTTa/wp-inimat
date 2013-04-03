@@ -15,19 +15,8 @@ $functions = new Inimat_Functions();
 // var globlas
 global $wpdb, $current_user;
 
-// funcion extra
-function path_relative() {
-	$doc_root = str_ireplace('\\', '/', $_SERVER['DOCUMENT_ROOT']);
-	$plugin_path = str_ireplace('\\', '/', WPINIMAT_PLUGIN_PATH);
-	$path_relative = str_ireplace($doc_root, '', $plugin_path);
-	$path_relative = '/'.$path_relative;
-	return $path_relative;
-}
-
 if (isset($_GET["select_creature"]) == FALSE) {
 	
-	// instantiate a Zebra_Form object
-	//$form = new Zebra_Form('form', 'GET');
 	$form = new Zebra_Form('form', 'GET');
 	
 	// Language for errors form
@@ -202,10 +191,10 @@ if (isset($_GET["select_creature"]) == FALSE) {
 		
 		$obj = $form->add('radios', 'gender', array(
 		
-			'aquatico'	=>  __('Aquatico', 'wpinimat_languages'),
-			'terrestre' =>  __('Terrestre', 'wpinimat_languages'),
-			'vegetal'	=>  __('Vegetal', 'wpinimat_languages'),
-			'volador'	=>  __('Volador', 'wpinimat_languages'),
+			'aquatic'		=>  __('Aquatic', 'wpinimat_languages'),
+			'terrestrial' 	=>  __('Terrestrial', 'wpinimat_languages'),
+			'vegetable'		=>  __('Vegetable', 'wpinimat_languages'),
+			'flying'		=>  __('Flying', 'wpinimat_languages'),
 			
 		), $query[0]["gender"]);
 		
@@ -290,7 +279,7 @@ if (isset($_GET["select_creature"]) == FALSE) {
 		$obj->set_rule(array(
 		
 			// 'required'  =>  array('error', __('An image is required!', 'wpinimat_languages')),
-			'upload'    =>  array(path_relative().'upload', ZEBRA_FORM_UPLOAD_RANDOM_NAMES, 'error', __('Could not upload file!<br>Check that the "creatureSs" folder exists and that it is writable', 'wpinimat_languages')),
+			'upload'    =>  array($functions->path_relative().'upload', ZEBRA_FORM_UPLOAD_RANDOM_NAMES, 'error', __('Could not upload file!<br>Check that the "creatureSs" folder exists and that it is writable', 'wpinimat_languages')),
 			'image'  =>  array('error', __('File must be a jpg, png or gif image!', 'wpinimat_languages')),
 			'filesize'  =>  array(1048576, 'error', __('File size must not exceed 1 MB!', 'wpinimat_languages')),
 		
@@ -315,7 +304,7 @@ if (isset($_GET["select_creature"]) == FALSE) {
 		$obj->set_rule(array(
 		
 			// 'required'  =>  array('error', __('An image is required!', 'wpinimat_languages')),
-			'upload'    =>  array(path_relative().'upload', ZEBRA_FORM_UPLOAD_RANDOM_NAMES, 'error', __('Could not upload file!<br>Check that the "creaturesMMM" folder exists and that it is writable', 'wpinimat_languages')),
+			'upload'    =>  array($functions->path_relative().'upload', ZEBRA_FORM_UPLOAD_RANDOM_NAMES, 'error', __('Could not upload file!<br>Check that the "creaturesMMM" folder exists and that it is writable', 'wpinimat_languages')),
 			'image'  =>  array('error', __('File must be a jpg, png or gif image!', 'wpinimat_languages')),
 			'filesize'  =>  array(1048576, 'error', __('File size must not exceed 1 MB!', 'wpinimat_languages')),
 		
@@ -340,7 +329,7 @@ if (isset($_GET["select_creature"]) == FALSE) {
 		$obj->set_rule(array(
 		
 			// 'required'  =>  array('error', __('An image is required!', 'wpinimat_languages')),
-			'upload'    =>  array(path_relative().'upload', ZEBRA_FORM_UPLOAD_RANDOM_NAMES, 'error', __('Could not upload file!<br>Check that the "creatures" folder exists and that it is writable', 'wpinimat_languages')),
+			'upload'    =>  array($functions->path_relative().'upload', ZEBRA_FORM_UPLOAD_RANDOM_NAMES, 'error', __('Could not upload file!<br>Check that the "creatures" folder exists and that it is writable', 'wpinimat_languages')),
 			'image'  =>  array('error', __('File must be a jpg, png or gif image!', 'wpinimat_languages')),
 			'filesize'  =>  array(1048576, 'error', __('File size must not exceed 1 MB!', 'wpinimat_languages')),
 		
@@ -365,7 +354,7 @@ if (isset($_GET["select_creature"]) == FALSE) {
 		$obj->set_rule(array(
 		
 			// 'required'  =>  array('error', __('An image is required!', 'wpinimat_languages')),
-			'upload'    =>  array(path_relative().'upload', ZEBRA_FORM_UPLOAD_RANDOM_NAMES, 'error', __('Could not upload file!<br>Check that the "upload" folder exists inside and that it is writable', 'wpinimat_languages')),
+			'upload'    =>  array($functions->path_relative().'upload', ZEBRA_FORM_UPLOAD_RANDOM_NAMES, 'error', __('Could not upload file!<br>Check that the "upload" folder exists inside and that it is writable', 'wpinimat_languages')),
 			'filetype'  =>  array('zip, tgz, rar, bzip', 'error', __('File must be a zip, rar or tgz!', 'wpinimat_languages')),
 			'filesize'  =>  array(10485760, 'error', __('File size must not exceed 10 MB!', 'wpinimat_languages')),
 		
@@ -613,7 +602,7 @@ if (isset($_GET["select_creature"]) == FALSE) {
 } else {
 	
 	// error not found creature
-	$form->error('error', __('Not found creature.', 'wpinimat_languages'));
+	$functions->msg(__('Not found creature.', 'wpinimat_languages'), 'warning');
 	
 }
 

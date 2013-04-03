@@ -1,4 +1,4 @@
-WP Inimat (beta)
+WP Inimat
 =========
 
 * **Contributor**: WaKeMaTTa
@@ -18,7 +18,7 @@ Functions provided by the plugin:
 * Add creatures `[completed]`
 * Modify creatures (option only for adminsitradores) `[completed]`
 * View all creatures `[completed]`
-* Viewing a single creature with carecteristicas `[coming soon]`
+* Viewing a single creature with carecteristicas `[completed]`
 
 ## Installation
 
@@ -33,16 +33,16 @@ To install the plugin follow these simple steps:
 
 Currently does not have any panel to manage.
 
-
 ### Frequently Asked Questions (FAQ)
 
 *You have any question? Make it in [here][]*
 
-  [here]:https://github.com/WaKeMaTTa/wp-bootcamp/issues
+	[here]:https://github.com/WaKeMaTTa/wp-bootcamp/issues
 
 ### Screenshots
 
-![screenshot-1](screenshot-1.png)
+ ![screenshot-1](screenshot-1.png)
+ ![screenshot-2](screenshot-2.png)
 
 ### Changelog
 

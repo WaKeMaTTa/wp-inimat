@@ -8,7 +8,6 @@ if ( !function_exists( 'add_action' ) ) {
 global $wpdb;
 
 require_once( WPINIMAT_PLUGIN_PATH . 'class/Inimat_Functions.php' );
-require_once( WPINIMAT_PLUGIN_PATH . 'class/zebra_form/Zebra_Form.php' );
 require_once( WPINIMAT_PLUGIN_PATH . 'class/Page_Lite.php' );
 
 $functions = new Inimat_Functions();
@@ -220,11 +219,17 @@ foreach ($sql as $key => $value) {
 				<input type="hidden" name="select_creature" value=<?php echo ($sql[$key]["id"] - 1);?> />
 				<input type="submit" id="btnsubmit" value="<?php echo __('View', 'wpinimat_languages'); ?>" class="button" style="margin: 10px;" />
 			</form>
-			<form action="admin.php">
-				<input type="hidden" name="page" value="wpinimat/classifier_creatures/edit" />
-				<input type="hidden" name="select_creature" value=<?php echo ($sql[$key]["id"] - 1);?> />
-				<input type="submit" id="btnsubmit" value="<?php echo __('Edit', 'wpinimat_languages'); ?>" class="button" style="margin: 10px;" />
-			</form>
+            <?php
+            if (current_user_can('manage_options') == TRUE) {
+				?>
+				<form action="admin.php">
+					<input type="hidden" name="page" value="wpinimat/classifier_creatures/edit" />
+					<input type="hidden" name="select_creature" value=<?php echo ($sql[$key]["id"] - 1);?> />
+					<input type="submit" id="btnsubmit" value="<?php echo __('Edit', 'wpinimat_languages'); ?>" class="button" style="margin: 10px;" />
+				</form>
+                <?php
+			}
+			?>
 			</th>
 			<td style="vertical-align: middle;">
 				<img src="<?php
@@ -247,7 +252,7 @@ foreach ($sql as $key => $value) {
 					} else {
 						
 						// no image
-						echo WPINIMAT_PLUGIN_URL . 'img/not_img.png';
+						echo WPINIMAT_PLUGIN_URL . 'img/not-img.png';
 						
 					}
 						

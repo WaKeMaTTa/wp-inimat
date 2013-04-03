@@ -6,11 +6,3 @@ upload/*.zip
 upload/th/*.png
 upload/th/*.gif
 upload/th/*.jpg
-
-# exclude files extra
-wp_inimat_creatures.sql
-information.php
-creatures.xml
-
-# Backups
-*bck*

@@ -1,3 +1,5 @@
+@charset "utf-8";
+
 /*******************************
  *  STYLES FOR ZEBRA_FORM
  *******************************/
@@ -93,7 +95,7 @@
 }
 
 .Zebra_Form select option {
-    padding: 0 5px /* same as the select box's horizontal padding or weird behaviour in Firefox */
+    padding: 0 5px /* same as the select boxs horizontal padding or weird behaviour in Firefox */
 }
 
 .Zebra_Form select option.dummy {
@@ -379,10 +381,10 @@ div.error div.container div.close a {
     display: block;
     width: 16px;
     height: 16px;
-    background: url('../img/ico-close.png') no-repeat;
+    background: url('../img/close.x16.png') no-repeat;
     text-indent: -9000px;
     margin-left: 17px;
-    _background-image: url('../img/ico-close.gif')
+    _background-image: url('../img/close.x16.gif')
 }
 
 /* accesskeys */
@@ -477,10 +479,10 @@ input:-moz-placeholder { color:#9C9CA2 !important }
     height: 16px;
     left: 131px;
     top: 15px;
-    background: #FFF url('../img/ico-refresh.png') no-repeat center center;
+    background: #FFF url('../img/refresh.x16.png') no-repeat center center;
     border: 1px solid #CCC;
     padding: 2px;
-    _background-image: url('../img/ico-refresh.gif')
+    _background-image: url('../img/refresh.x16.gif')
 }
 
 .Zebra_Form div.Zebra_Form_Input_Prefix { color: #888; padding: 0; margin-right: 2px }
@@ -556,8 +558,8 @@ input:-moz-placeholder { color:#9C9CA2 !important }
 
 /* = ICON
 ----------------------------------------------------------------------------------------------------------------------*/
-button.Zebra_DatePicker_Icon                { position: absolute; width: 16px; height: 16px; background: url('../img/calendar.png') no-repeat left top; text-indent: -9000px; border: none; cursor: pointer; margin: 0 0 0 5px; padding: 0; line-height: 0 }
-button.Zebra_DatePicker_Icon_Disabled       { background-image: url('../img/calendar-disabled.png') }
+button.Zebra_DatePicker_Icon                { position: absolute; width: 16px; height: 16px; background: url('../img/calendar.x16.png') no-repeat left top; text-indent: -9000px; border: none; cursor: pointer; margin: 0 0 0 5px; padding: 0; line-height: 0 }
+button.Zebra_DatePicker_Icon_Disabled       { background-image: url('../img/calendar-disabled.x16.png') }
 button.Zebra_DatePicker_Icon_Inside         { margin: 0 3px 0 0 }
 
 /* Fix icon position in Chrome & Safari */
