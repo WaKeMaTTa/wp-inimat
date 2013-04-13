@@ -123,13 +123,13 @@ if (isset($author)) { ?>
 		
 		echo '<br /><input type="hidden" name="skill_total" id="skill_total" value="' . $count . '" />';
 		
-		echo '<input type="button" name="more_skill" id="more_skill" value="' . __('Add Skill') . '" class="button">';
+		echo '<input type="button" name="more_skill" id="more_skill" value="' . __('Add Skill', 'wpinimat_languages') . '" class="button">';
 	
 	} else {
 		
 		echo $skill_1 . ' ' . $type_skill_1 . $desc_skill_1 . '<br />' 
 		. '<input type="hidden" name="skill_total" id="skill_total" value="1" />' 
-		. '<input type="button" name="more_skill" id="more_skill" value="' . __('Add Skill') . '" class="button">' ;
+		. '<input type="button" name="more_skill" id="more_skill" value="' . __('Add Skill', 'wpinimat_languages') . '" class="button">' ;
 	} ?>
     
     <div class="clear"></div>

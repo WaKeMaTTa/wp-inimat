@@ -17,7 +17,7 @@ function wpinimat_admin_warnings() {
 	
 	global $pagenow;
 	
-	if ( $pagenow == 'plugins.php' && $_GET['page'] == 'wpinimat' ) {
+	if ( $pagenow == 'plugins.php' && isset($_GET['page']) == 'wpinimat' ) {
 		
 		if ( get_option( 'wpinimat_alert_code' ) ) {
 			function wpinimat_alert() {
@@ -205,8 +205,7 @@ function wpinimat_classifier_creatures_view() {
 function wpinimat_settings() {
 	echo '<div class="wrap">';
 	echo WPINIMAT_ICON32 . '<h2>Inimat - ' . __( 'Settings', 'wpinimat_languages' ) . '</h2>';
-	echo '<h3>' . __('In this moments not have settings.') . '</h3>';
-	//require( plugin_dir_path(__FILE__) . 'admin.classifier_creatures.settings.php');
+	require( plugin_dir_path(__FILE__) . 'admin.settings.php');
 	echo '</div>';
 }
 
